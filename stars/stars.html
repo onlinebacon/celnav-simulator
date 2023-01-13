@@ -1,0 +1,47 @@
+<html>
+	<head>
+		<style>
+			body {
+				background-color: #151515;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas width="1800" height="900"></canvas>
+	</body>
+</html>
+<script src="stars.js"></script>
+<script>
+	const canvas = document.querySelector('canvas');
+	const ctx = canvas.getContext('2d');
+	ctx.fillStyle = '#111213';
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	ctx.fillStyle = '#fff';
+	const base_mag = -1.45;
+	const base_rad = 3;
+	const magToRad = (mag) => Math.pow(Math.pow(2.512, base_mag - mag), 0.25)*base_rad;
+	
+	const hips = [
+		61084,
+		60718,
+		62434,
+		59747,
+		60260,
+	];
+	
+	const filtered = stars
+		// .filter(star => {
+		// 	return hips.includes(star.hip);
+		// })
+		.sort((a, b) => a.vmag - b.vmag).slice(0, 500);
+
+	for (let { ra, dec, vmag } of filtered) {
+		const x = ra/24*canvas.width;
+		const y = (0.5 - dec/180)*canvas.height;
+		const rad = magToRad(vmag);
+		ctx.fillStyle = `rgba(255, 255, 255, ${Math.sqrt(rad/base_rad)})`;
+		ctx.beginPath();
+		ctx.arc(x, y, rad, 0, Math.PI*2);
+		ctx.fill();
+	}
+</script>
