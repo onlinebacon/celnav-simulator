@@ -10,8 +10,9 @@
 		<canvas width="1800" height="900"></canvas>
 	</body>
 </html>
-<script src="stars.js"></script>
+<script src="../js/stars.js"></script>
 <script>
+
 	const canvas = document.querySelector('canvas');
 	const ctx = canvas.getContext('2d');
 	ctx.fillStyle = '#111213';
@@ -34,14 +35,16 @@
 		// 	return hips.includes(star.hip);
 		// })
 		.sort((a, b) => a.vmag - b.vmag).slice(0, 500);
+	
+	ctx.fillStyle = '#fff';
 
 	for (let { ra, dec, vmag } of filtered) {
 		const x = ra/24*canvas.width;
 		const y = (0.5 - dec/180)*canvas.height;
 		const rad = magToRad(vmag);
-		ctx.fillStyle = `rgba(255, 255, 255, ${Math.sqrt(rad/base_rad)})`;
 		ctx.beginPath();
 		ctx.arc(x, y, rad, 0, Math.PI*2);
 		ctx.fill();
 	}
+
 </script>
