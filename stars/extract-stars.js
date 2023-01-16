@@ -32,6 +32,7 @@ const stars = source.split(/\n/).map(line => {
 		vi:   Number(vi),
 	};
 });
+stars.sort((a, b) => a.vmag - b.vmag);
 const json = JSON.stringify(stars, null, '\t');
-const file = `const stars = ${json};`;
+const file = `export default ${json};`;
 fs.writeFileSync(path.join(__dirname, '../js/stars.js'), file);

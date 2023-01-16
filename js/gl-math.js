@@ -163,6 +163,17 @@ export class Mat4 extends Array {
 		dst[0xE] += z;
 		return dst;
 	}
+	scaleTransform(value, dst = this) {
+		if (dst !== this) {
+			copyMat4(this, dst);
+		}
+		for (let i=0; i<16; ++i) {
+			if ((i & 3) !== 3) {
+				dst[i] *= value;
+			}
+		}
+		return dst;
+	}
 	rotateX(angle, dst = this) {
 		mat4RotateX(this, Math.sin(angle), Math.cos(angle), dst);
 		return dst;
