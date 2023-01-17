@@ -266,4 +266,66 @@ export class Vec4 extends Array {
 		dst[3] = w;
 		return dst;
 	}
+	apply(mat, dst = this) {
+		const [ x, y, z, w ] = this;
+		const [
+			ix, iy, iz, iw,
+			jx, jy, jz, jw,
+			kx, ky, kz, kw,
+			lx, ly, lz, lw,
+		] = mat;
+		dst[0] = x*ix + y*jx + z*kx + w*lx;
+		dst[1] = x*iy + y*jy + z*ky + w*ly;
+		dst[2] = x*iz + y*jz + z*kz + w*lz;
+		dst[3] = x*iw + y*jw + z*kw + w*lw;
+		return dst;
+	}
+}
+
+export class Vec3 extends Array {
+	constructor([ x = 0, y = 0, z = 0 ] = []) {
+		super(3);
+		this[0] = x;
+		this[1] = y;
+		this[2] = z;
+	}
+	rotateX(angle, dst = this) {
+		const sin = Math.sin(angle);
+		const cos = Math.cos(angle);
+		const [ x, y, z ] = this;
+		dst[0] = x;
+		dst[1] = y*cos - z*sin;
+		dst[2] = z*cos + y*sin;
+		return dst;
+	}
+	rotateY(angle, dst = this) {
+		const sin = Math.sin(angle);
+		const cos = Math.cos(angle);
+		const [ x, y, z ] = this;
+		dst[0] = x*cos + z*sin;
+		dst[1] = y;
+		dst[2] = z*cos - x*sin;
+		return dst;
+	}
+	rotateZ(angle, dst = this) {
+		const sin = Math.sin(angle);
+		const cos = Math.cos(angle);
+		const [ x, y, z ] = this;
+		dst[0] = x*cos - y*sin;
+		dst[1] = y*cos + x*sin;
+		dst[2] = z;
+		return dst;
+	}
+	apply(mat, dst = this) {
+		const [ x, y, z ] = this;
+		const [
+			ix, iy, iz, _iw,
+			jx, jy, jz, _jw,
+			kx, ky, kz, _kw,
+		] = mat;
+		dst[0] = x*ix + y*jx + z*kx;
+		dst[1] = x*iy + y*jy + z*ky;
+		dst[2] = x*iz + y*jz + z*kz;
+		return dst;
+	}
 }
