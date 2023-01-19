@@ -141,6 +141,13 @@ const invertTransform = (mat, dst) => {
 	mat4AlignJHatOnXPlane(tmp, dst);
 };
 
+const calcAngle = (adj, opp) => {
+	const len = Math.sqrt(adj*adj + opp*opp);
+	if (len === 0) return 0;
+	const tmp = Math.acos(adj/len);
+	return opp >= 0 ? tmp : -tmp;
+};
+
 export class Mat4 extends Array {
 	constructor() {
 		super(16);
@@ -225,6 +232,11 @@ export class Mat4 extends Array {
 		dst[0xE] = alx*biz + aly*bjz + alz*bkz + alw*blz;
 		dst[0xF] = alx*biw + aly*bjw + alz*bkw + alw*blw;
 		return dst;
+	}
+	getYRotationOfK() {
+		const x = this[0x8];
+		const z = this[0xA];
+		return calcAngle(z, x);
 	}
 }
 

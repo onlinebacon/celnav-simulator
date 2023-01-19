@@ -112,6 +112,9 @@ class Context {
 		this.program = null;
 	}
 	useProgram(program) {
+		if (program === this.program) {
+			return;
+		}
 		gl.useProgram(program.ptr);
 	}
 	drawGeometry({ ptr, element }) {
@@ -150,4 +153,12 @@ export const resize = (width, height) => {
  */
 export const setFrame = (fn) => {
 	frame = fn;
+};
+
+/**
+ * @typedef {function(Context)} OnceFunc
+ * @param {FrameFunc} fn
+ */
+export const once = (fn) => {
+	fn(ctx);
 };
