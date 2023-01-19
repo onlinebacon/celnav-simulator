@@ -37,8 +37,10 @@ document.body.appendChild(Webgl2.canvas);
 
 window.addEventListener('wheel', e => {
 	let { vFov } = camera;
-	vFov = Math.exp(Math.log(vFov) + e.deltaY*0.05);
-	camera.vFov = Math.max(0.01, Math.min(110, vFov));
+	const mag = e.deltaY >= 0 ? 1 : -1;
+	vFov = Math.exp(Math.log(vFov) + mag*0.05);
+	vFov = Math.max(0.01, Math.min(110, vFov));
+	camera.vFov = vFov;
 });
 
 window.addEventListener('keydown', e => {
