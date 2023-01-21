@@ -24,30 +24,27 @@ export const celestialSphere = new VertexShader(`
 
 	layout (location = 0) in vec3 inVertex;
 	layout (location = 1) in vec3 inColor;
-	layout (location = 2) in vec3 inNormal;
 
 	uniform mat4 transform;
 	uniform mat4 projection;
 
 	out vec3 color;
 
-	float correctAlt(float alt) {
-		return alt;
+	float correctY(float y) {
+		return y;
 	}
 
-	vec3 addRefraction(vec3 normal, vec3 vertex) {
-		float alt0 = asin(vertex.y);
-		float alt1 = correctAlt(alt0);
-		float yScale = tan(alt1)/tan(alt0);
-		vertex.y *= yScale;
-		return normalize(vertex);
+	vec3 addRefraction(vec3 vertex) {
+		vertex.y = correctY(vertex.y);
+		float base = sqrt(1.0 - vertex.y*vertex.y);
+		vertex.xz = normalize(vertex.xz)*base;
+		return vertex;
 	}
 
 	void main() {
 		color = inColor;
-		vec3 normal = inNormal*mat3(transform);
 		vec3 vertex = inVertex*mat3(transform);
-		vertex = addRefraction(normal, vertex);
+		vertex = addRefraction(vertex);
 		gl_Position = vec4(vertex, 1.0)*projection;
 	}
 `);

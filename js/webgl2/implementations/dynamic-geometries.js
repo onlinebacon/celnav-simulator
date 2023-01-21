@@ -42,24 +42,23 @@ export const celestialSphere = (stars) => {
 		const transform = new Mat4();
 		transform.rotateX(decAngle);
 		transform.rotateZ(-raAngle);
-		const normal = new Vec3([ 0, 1, 0 ]).apply(transform);
+		const center = new Vec3([ 0, 1, 0 ]).apply(transform);
 		const color = [ 1, 1, 1 ];
 		attr.push(
-			...normal,
+			...center,
 			...color,
-			...normal,
 		);
 		for (let i=0; i<nVertices; ++i) {
 			const angle = i/nVertices*Math.PI*2;
 			const x = Math.sin(angle)*rad;
-			const z = Math.cos(angle)*rad;	
+			const z = Math.cos(angle)*rad;
 			const vec = new Vec3([ x, 1, z ]).apply(transform).normalize();
-			attr.push(...vec, ...color, ...normal);
+			attr.push(...vec, ...color);
 			const triangle = [ 0, 1 + i, 1 + (i + 1)%nVertices ].map(i => i + vCount);
 			element.push(...triangle);
 		}
 		vCount += nVertices + 1;
 	};
 	stars.forEach(addStar);
-	return new Geometry({ attr, element, layout: [ 3, 3, 3 ] });
+	return new Geometry({ attr, element, layout: [ 3, 3 ] });
 };
