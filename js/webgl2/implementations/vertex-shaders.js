@@ -32,7 +32,6 @@ export const celestialSphere = new VertexShader(`
 	out vec3 color;
 
 	float correctAlt(float alt) {
-		// Formula to correct from non-refracted to refracted goes here
 		return alt;
 	}
 

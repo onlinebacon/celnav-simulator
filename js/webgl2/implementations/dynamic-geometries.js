@@ -53,7 +53,7 @@ export const celestialSphere = (stars) => {
 			const angle = i/nVertices*Math.PI*2;
 			const x = Math.sin(angle)*rad;
 			const z = Math.cos(angle)*rad;	
-			const vec = new Vec3([ x, 1, z ]).apply(transform);
+			const vec = new Vec3([ x, 1, z ]).apply(transform).normalize();
 			attr.push(...vec, ...color, ...normal);
 			const triangle = [ 0, 1 + i, 1 + (i + 1)%nVertices ].map(i => i + vCount);
 			element.push(...triangle);

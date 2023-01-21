@@ -340,4 +340,12 @@ export class Vec3 extends Array {
 		dst[2] = x*iz + y*jz + z*kz;
 		return dst;
 	}
+	normalize(dst = this) {
+		const [ x, y, z ] = this;
+		const scale = 1/Math.sqrt(x*x + y*y + z*z);
+		dst[0] = x*scale;
+		dst[1] = y*scale;
+		dst[2] = z*scale;
+		return dst;
+	}
 }
