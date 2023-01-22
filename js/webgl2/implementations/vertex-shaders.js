@@ -18,6 +18,12 @@ export const coloredGeometry = new VertexShader(`
 	}
 `);
 
+const c1 = Math.PI/180;
+const c2 = 180/Math.PI;
+const c3 = 5.11;
+const c4 = 10.3*c1;
+const c5 = 0.017*c1;
+
 export const celestialSphere = new VertexShader(`
 	#version 300 es
 	precision highp float;
@@ -31,7 +37,10 @@ export const celestialSphere = new VertexShader(`
 	out vec3 color;
 
 	float correctY(float y) {
-		return y;
+		float h = asin(y)*${c2};
+		if (h < -2.0 || h > 89.9) return y;
+		float dif = (sin(h*${c1} + ${c5}/tan(h*${c1} + ${c4}/(h + ${c3}))) - y)*0.99;
+		return y + dif;
 	}
 
 	vec3 addRefraction(vec3 vertex) {
