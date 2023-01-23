@@ -6,7 +6,7 @@ const c3 = 5.11;
 const c4 = 10.3*c1;
 const c5 = 0.017*c1;
 
-export const celestialSphere = new VertexShader(`
+const celSphereSrc = `
 	#version 300 es
 	precision highp float;
 
@@ -38,9 +38,9 @@ export const celestialSphere = new VertexShader(`
 		vertex = addRefraction(vertex);
 		gl_Position = vec4(vertex, 1.0)*projection;
 	}
-`);
+`;
 
-export const justGeometry = new VertexShader(`
+const justGeometrySrc = `
 	#version 300 es
 	precision highp float;
 
@@ -52,9 +52,9 @@ export const justGeometry = new VertexShader(`
 	void main() {
 		gl_Position = vec4(inVertex, 1.0)*transform*projection;
 	}
-`);
+`;
 
-export const orthographic = new VertexShader(`
+const orthographicSrc = `
 	#version 300 es
 	precision highp float;
 
@@ -75,4 +75,8 @@ export const orthographic = new VertexShader(`
 		vertex.xy += screenPos;
 		gl_Position = vec4(vertex, 1.0);
 	}
-`);
+`;
+
+export const celestialSphere = new VertexShader(celSphereSrc);
+export const justGeometry = new VertexShader(justGeometrySrc);
+export const orthographic = new VertexShader(orthographicSrc);
