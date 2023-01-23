@@ -1,23 +1,5 @@
 import { VertexShader } from '../core/webgl2.js';
 
-export const coloredGeometry = new VertexShader(`
-	#version 300 es
-	precision highp float;
-
-	layout (location = 0) in vec3 inVertex;
-	layout (location = 1) in vec3 inColor;
-
-	uniform mat4 transform;
-	uniform mat4 projection;
-
-	out vec3 color;
-
-	void main() {
-		color = inColor;
-		gl_Position = vec4(inVertex, 1.0)*transform*projection;
-	}
-`);
-
 const c1 = Math.PI/180;
 const c2 = 180/Math.PI;
 const c3 = 5.11;
