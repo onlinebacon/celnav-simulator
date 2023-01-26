@@ -4,17 +4,18 @@ import * as CelestialSphere from './webgl2/implementations/items/celestial-spher
 import * as Horizon from './webgl2/implementations/items/horizon.js';
 import { Camera } from './webgl2/core/camera.js';
 
-CelestialSphere.build(stars);
-Horizon.build({ dip: 0 });
-
 const angle = (deg) => deg*(Math.PI/180);
+
+CelestialSphere.build(stars);
+Horizon.build({ dip: angle(6.2/60) });
+
 const [ width, height ] = [ 1200, 800 ];
 const camera = new Camera({
 	vFov: 45,
 	ratio: width/height,
 });
 
-let azm = 0, alt = 0;
+let azm = 0, alt = 15;
 
 Webgl2.resize(width, height);
 Webgl2.setFrame(function(ctx) {

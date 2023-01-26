@@ -31,7 +31,7 @@ const base_rad = 0.003;
 const magToRad = (mag) => Math.pow(Math.pow(2.512, base_mag - mag), 0.25)*base_rad;
 
 export const celestialSphere = (stars) => {
-	const nVertices = 8;
+	const nVertices = 5;
 	const attr = [];
 	const element = [];
 	let vCount = 0;
