@@ -2,14 +2,13 @@ import stars from './stars.js';
 import * as Webgl2 from './webgl2/core/webgl2.js';
 import * as CelestialSphere from './webgl2/implementations/items/celestial-sphere.js';
 import * as Horizon from './webgl2/implementations/items/horizon.js';
-import * as SextantScope from './webgl2/implementations/items/sextant-scope.js';
 import { Camera } from './webgl2/core/camera.js';
 
 CelestialSphere.build(stars);
 Horizon.build({ dip: 0 });
 
 const angle = (deg) => deg*(Math.PI/180);
-const [ width, height ] = [ 800, 600 ];
+const [ width, height ] = [ 1200, 800 ];
 const camera = new Camera({
 	vFov: 45,
 	ratio: width/height,
@@ -30,7 +29,6 @@ Webgl2.setFrame(function(ctx) {
 	});
 	CelestialSphere.draw(ctx, camera);
 	Horizon.draw(ctx, camera);
-	SextantScope.draw(ctx, camera);
 });
 
 document.body.appendChild(Webgl2.canvas);
@@ -39,24 +37,34 @@ window.addEventListener('wheel', e => {
 	let { vFov } = camera;
 	const mag = e.deltaY >= 0 ? 1 : -1;
 	vFov = Math.exp(Math.log(vFov) + mag*0.05);
-	vFov = Math.max(0.01, Math.min(110, vFov));
+	vFov = Math.max(30, Math.min(75, vFov));
 	camera.vFov = vFov;
 });
 
-window.addEventListener('keydown', e => {
-	const { key } = e;
+let startClick = null;
+
+Webgl2.canvas.addEventListener('mousedown', e => {
+	if (e.ctrlKey) return;
+	if (e.shiftKey) return;
+	if (e.altKey) return;
+	if (e.button !== 0) return;
+	const x = e.offsetX;
+	const y = e.offsetY;
 	const { vFov } = camera;
-	const inc = vFov*0.01;
-	if (/^(arrow)?up$/i.test(key)) {
-		alt = Math.min(90, alt + inc);
+	const hFov = vFov*camera.ratio;
+	startClick = { x, y, vFov, hFov, azm, alt };
+});
+
+Webgl2.canvas.addEventListener('mousemove', e => {
+	const leftClick = e.buttons & 1;
+	if (!leftClick) {
+		startClick = null;
+		return;
 	}
-	if (/^(arrow)?down$/i.test(key)) {
-		alt = Math.max(0, alt - inc);
-	}
-	if (/^(arrow)?right$/i.test(key)) {
-		azm = (azm + inc)%360;
-	}
-	if (/^(arrow)?left$/i.test(key)) {
-		azm = (azm - inc + 360)%360;
-	}
+	const x = e.offsetX;
+	const y = e.offsetY;
+	const dx = x - startClick.x;
+	const dy = startClick.y - y;
+	alt = Math.min(90, startClick.alt - dy/height*startClick.vFov);
+	azm = (startClick.azm - dx/width*startClick.hFov + 360)%360;
 });
