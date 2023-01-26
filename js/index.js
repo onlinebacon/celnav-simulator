@@ -4,35 +4,35 @@ import * as CelestialSphere from './webgl2/implementations/items/celestial-spher
 import * as Horizon from './webgl2/implementations/items/horizon.js';
 import { Camera } from './webgl2/core/camera.js';
 
+document.body.appendChild(Webgl2.canvas);
+
 const angle = (deg) => deg*(Math.PI/180);
+
+let width;
+let height;
+let startClick = null;
+
+let azm = 0;
+let alt = 15;
+let lat = 0;
+let lon = 0;
 
 CelestialSphere.build(stars);
 Horizon.build({ dip: angle(6.2/60) });
+const camera = new Camera({ vFov: 45 });
 
-const [ width, height ] = [ 1200, 800 ];
-const camera = new Camera({
-	vFov: 45,
-	ratio: width/height,
-});
-
-let azm = 0, alt = 15;
-
-Webgl2.resize(width, height);
 Webgl2.setFrame(function(ctx) {
 	camera.transform.clear()
 	.rotateX(angle(-alt))
 	.rotateY(angle(azm));
 	camera.update();
 	CelestialSphere.setOrientation({
-		lat: 0,
-		lon: 0,
+		lat, lon,
 		ariesGHA: Date.now()*0.00001,
 	});
 	CelestialSphere.draw(ctx, camera);
 	Horizon.draw(ctx, camera);
 });
-
-document.body.appendChild(Webgl2.canvas);
 
 window.addEventListener('wheel', e => {
 	let { vFov } = camera;
@@ -41,8 +41,6 @@ window.addEventListener('wheel', e => {
 	vFov = Math.max(30, Math.min(75, vFov));
 	camera.vFov = vFov;
 });
-
-let startClick = null;
 
 Webgl2.canvas.addEventListener('mousedown', e => {
 	if (e.ctrlKey) return;
@@ -69,3 +67,14 @@ Webgl2.canvas.addEventListener('mousemove', e => {
 	alt = Math.min(90, startClick.alt - dy/height*startClick.vFov);
 	azm = (startClick.azm - dx/width*startClick.hFov + 360)%360;
 });
+
+const handleResize = () => {
+	width = window.innerWidth;
+	height = window.innerHeight;
+	camera.ratio = width/height;
+	Webgl2.resize(width, height);
+};
+
+window.addEventListener('resize', handleResize);
+
+handleResize();
