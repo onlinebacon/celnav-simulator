@@ -2,6 +2,7 @@ import stars from './stars.js';
 import * as Webgl2 from './webgl2/core/webgl2.js';
 import * as CelestialSphere from './webgl2/implementations/items/celestial-sphere.js';
 import * as Horizon from './webgl2/implementations/items/horizon.js';
+import * as AstronomyEngine from './astronomy-engine.js';
 import { Camera } from './webgl2/core/camera.js';
 
 document.body.appendChild(Webgl2.canvas);
@@ -29,7 +30,7 @@ Webgl2.setFrame(function(ctx) {
 	camera.update();
 	CelestialSphere.setOrientation({
 		lat, lon,
-		ariesGHA: Date.now()*0.00001,
+		ariesGHA: AstronomyEngine.getCurrentAriesGHA(),
 	});
 	CelestialSphere.draw(ctx, camera);
 	Horizon.draw(ctx, camera);
