@@ -4,7 +4,7 @@ const temp = new Mat4();
 
 export class Camera {
 	constructor({
-		vFov = 90,
+		vFov = Math.PI*0.25,
 		near = 0.1,
 		far = 100,
 		ratio = 1,
@@ -18,7 +18,7 @@ export class Camera {
 		this.update();
 	}
 	update() {
-		const slope = Math.tan(this.vFov/360*Math.PI);
+		const slope = Math.tan(this.vFov/2);
 		const my = 1/slope;
 		const mx = 1/(slope*this.ratio);
 		const n = this.near;
