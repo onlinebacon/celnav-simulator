@@ -1,10 +1,17 @@
 import { sextantScope as geometry } from '../static-geometries.js';
-import { orthographic as program } from '../programs.js';
+import * as Programs from '../programs.js';
 
-export const draw = (ctx, camera) => {
-    ctx.useProgram(program);
+const progMap = {
+	C: Programs.orthographic,
+	L: Programs.orthographicL,
+	R: Programs.orthographicR,
+};
+
+export const draw = (ctx, camera, side = 'C') => {
+	const prog = progMap[side];
+    ctx.useProgram(prog);
     ctx.drawGeometry(geometry);
-	program.setFloatUniform('scale', 1);
-	program.setFloatUniform('screenRatio', camera.ratio);
-	program.setVec2Uniform('screenPos', [ 0, 0 ]);
+	prog.setFloatUniform('scale', 1);
+	prog.setFloatUniform('screenRatio', camera.ratio);
+	prog.setVec2Uniform('screenPos', [ 0, 0 ]);
 };

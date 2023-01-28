@@ -121,6 +121,18 @@ class Context {
 		gl.bindVertexArray(ptr);
 		gl.drawElements(gl.TRIANGLES, element.length, gl.UNSIGNED_SHORT, 0);
 	}
+	leftMode() {
+		const width = canvas.width >> 1;
+		gl.viewport(0, 0, width, canvas.height);
+	};
+	rightMode() {
+		const x = canvas.width >> 1;
+		const width = canvas.width - x;
+		gl.viewport(x, 0, width, canvas.height);
+	};
+	fullMode() {
+		gl.viewport(0, 0, canvas.width, canvas.height);
+	};
 }
 
 const ctx = new Context();

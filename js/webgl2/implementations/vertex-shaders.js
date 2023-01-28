@@ -6,6 +6,13 @@ const c3 = 5.11;
 const c4 = 10.3*c1;
 const c5 = 0.017*c1;
 
+const sideProjection = (addX) => `{
+	gl_Position.xyz /= gl_Position.w;
+	gl_Position.x *= 2.0;
+	gl_Position.x += ${addX}.0;
+	gl_Position.xyz *= gl_Position.w;
+}`;
+
 const celSphereSrc = `
 	#version 300 es
 	precision highp float;
@@ -37,6 +44,7 @@ const celSphereSrc = `
 		vec3 vertex = inVertex*mat3(transform);
 		vertex = addRefraction(vertex);
 		gl_Position = vec4(vertex, 1.0)*projection;
+		/* MAIN_END */
 	}
 `;
 
@@ -51,6 +59,7 @@ const justGeometrySrc = `
 
 	void main() {
 		gl_Position = vec4(inVertex, 1.0)*transform*projection;
+		/* MAIN_END */
 	}
 `;
 
@@ -74,9 +83,26 @@ const orthographicSrc = `
 		vertex.xy *= scale;
 		vertex.xy += screenPos;
 		gl_Position = vec4(vertex, 1.0);
+		/* MAIN_END */
 	}
 `;
 
+const sideVersion = (src, addX) => {
+	src = src.replace(/\/\*\s*MAIN_END\s*\*\//, sideProjection(addX));
+	return new VertexShader(src);
+};
+
+const sideL = (src) => sideVersion(src, 1);
+const sideR = (src) => sideVersion(src, -1);
+
 export const celestialSphere = new VertexShader(celSphereSrc);
+export const celestialSphereL = sideL(celSphereSrc);
+export const celestialSphereR = sideR(celSphereSrc);
+
 export const justGeometry = new VertexShader(justGeometrySrc);
+export const justGeometryL = sideL(justGeometrySrc);
+export const justGeometryR = sideR(justGeometrySrc);
+
 export const orthographic = new VertexShader(orthographicSrc);
+export const orthographicL = sideL(orthographicSrc);
+export const orthographicR = sideR(orthographicSrc);

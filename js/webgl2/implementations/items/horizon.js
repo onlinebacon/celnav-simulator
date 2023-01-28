@@ -2,7 +2,12 @@ import { Mat4 } from '../../core/gl-math.js';
 import * as Geometries from '../dynamic-geometries.js';
 import * as Programs from '../programs.js';
 
-const program = Programs.variableColorGeometry;
+const progMap = {
+    C: Programs.variableColorGeometry,
+    R: Programs.variableColorGeometryR,
+    L: Programs.variableColorGeometryL,
+};
+
 const transform = new Mat4();
 const radius = 1;
 const ocean = [ 0.1, 0.2, 0.3 ];
@@ -23,11 +28,12 @@ export const build = ({ dip }) => {
     interpolate(0.05);
 };
 
-export const draw = (ctx, camera) => {
+export const draw = (ctx, camera, side = 'C') => {
+    const prog = progMap[side]
     transform.clear().rotateY(camera.transform.getYRotationOfK());
-    ctx.useProgram(program);
-    program.setVec3Uniform('color', color);
-    program.setMat4Uniform('transform', transform);
-    program.setMat4Uniform('projection', camera.projection);
+    ctx.useProgram(prog);
+    prog.setVec3Uniform('color', color);
+    prog.setMat4Uniform('transform', transform);
+    prog.setMat4Uniform('projection', camera.projection);
     ctx.drawGeometry(geometry);
 };
