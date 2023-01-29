@@ -3,6 +3,7 @@ import * as CelestialSphere from './webgl2/implementations/items/celestial-spher
 import * as Horizon from './webgl2/implementations/items/horizon.js';
 import * as SextantScope from './webgl2/implementations/items/sextant-scope.js';
 import * as AstronomyEngine from './astronomy-engine/astronomy-engine.js';
+import * as ScreenInfo from './screen-info/screen-info.js';
 import { Camera } from './webgl2/core/camera.js';
 import { Player } from './model/player.js';
 
@@ -52,4 +53,5 @@ Webgl2.setFrame(function(ctx) {
         ctx.rightMode();
         drawAllItems(ctx, camera, 'R');
     }
+    ScreenInfo.setSextantAngle(player.sextantAngle);
 });

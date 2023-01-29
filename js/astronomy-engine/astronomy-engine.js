@@ -9,7 +9,7 @@ const SID_DAY = 86164090.53820801;
 const BASE_TIME = 1688189036000;
 
 export const now = () => {
-    return Date.now() + TIME_OFFSET;
+    return new Date(Date.now() + TIME_OFFSET);
 };
 
 export const getCurrentAriesGHA = () => {
