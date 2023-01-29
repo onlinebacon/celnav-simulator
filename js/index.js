@@ -1,8 +1,7 @@
-import stars from './stars.js';
 import * as Webgl2 from './webgl2/core/webgl2.js';
 import * as CelestialSphere from './webgl2/implementations/items/celestial-sphere.js';
 import * as Horizon from './webgl2/implementations/items/horizon.js';
-import * as AstronomyEngine from './astronomy-engine.js';
+import * as AstronomyEngine from './astronomy-engine/astronomy-engine.js';
 import * as Control from './control.js';
 import { Camera } from './webgl2/core/camera.js';
 import { Player } from './model/player.js';
@@ -16,7 +15,7 @@ player.alt = toRad(15);
 Control.setCamera(camera);
 Control.setPlayer(player);
 
-CelestialSphere.build(stars);
+CelestialSphere.build(AstronomyEngine.getStars(1600));
 Horizon.build({ dip: toRad(6.2/60) });
 
 Webgl2.setFrame(function(ctx) {

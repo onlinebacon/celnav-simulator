@@ -1,3 +1,5 @@
+import Stars from './stars.js';
+
 const { PI } = Math;
 const TAU = PI*2;
 
@@ -16,4 +18,12 @@ export const getCurrentAriesGHA = () => {
     const trucnatedAngle = angleOffset%TAU;
     const positive = (trucnatedAngle + TAU)%TAU;
     return positive;
+};
+
+export const getStars = (size) => {
+    return Stars.slice(0, size);
+};
+
+export const setTime = (time) => {
+    TIME_OFFSET = time - Date.now();
 };

@@ -35,4 +35,4 @@ const stars = source.split(/\n/).map(line => {
 stars.sort((a, b) => a.vmag - b.vmag);
 const json = JSON.stringify(stars, null, '\t');
 const file = `export default ${json};`;
-fs.writeFileSync(path.join(__dirname, '../js/stars.js'), file);
+fs.writeFileSync(path.join(__dirname, '../js/astronomy-engine/stars.js'), file);
