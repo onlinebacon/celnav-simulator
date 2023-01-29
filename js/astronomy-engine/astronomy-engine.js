@@ -1,4 +1,4 @@
-import Stars from './stars.js';
+import Stars from '../db/stars.js';
 
 const { PI } = Math;
 const TAU = PI*2;
