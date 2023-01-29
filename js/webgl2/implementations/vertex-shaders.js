@@ -7,10 +7,7 @@ const c4 = 10.3*c1;
 const c5 = 0.017*c1;
 
 const sideProjection = (addX) => `{
-	gl_Position.xyz /= gl_Position.w;
-	gl_Position.x *= 2.0;
-	gl_Position.x += ${addX}.0;
-	gl_Position.xyz *= gl_Position.w;
+	gl_Position.x = (gl_Position.x/gl_Position.w*2.0 + ${addX}.0)*gl_Position.w;
 }`;
 
 const celSphereSrc = `
