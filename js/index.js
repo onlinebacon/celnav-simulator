@@ -3,6 +3,8 @@ import * as CelestialSphere from './webgl2/implementations/items/celestial-spher
 import * as Horizon from './webgl2/implementations/items/horizon.js';
 import * as AstronomyEngine from './astronomy-engine/astronomy-engine.js';
 import * as Control from './control.js';
+import * as Scene from './scene.js';
+
 import { Camera } from './webgl2/core/camera.js';
 import { Player } from './model/player.js';
 
@@ -15,22 +17,11 @@ player.alt = toRad(15);
 Control.setCamera(camera);
 Control.setPlayer(player);
 
+Scene.setCamera(camera);
+Scene.setPlayer(player);
+
 CelestialSphere.build(AstronomyEngine.getStars(1600));
 Horizon.build({ dip: toRad(6.2/60) });
-
-Webgl2.setFrame(function(ctx) {
-	camera.transform.clear()
-	.rotateX(-player.alt)
-	.rotateY(player.azm);
-	camera.update();
-	CelestialSphere.setOrientation({
-		lat: player.lat,
-		lon: player.lon,
-		ariesGHA: AstronomyEngine.getCurrentAriesGHA(),
-	});
-	CelestialSphere.draw(ctx, camera);
-	Horizon.draw(ctx, camera);
-});
 
 const handleResize = () => {
 	const width = window.innerWidth;
