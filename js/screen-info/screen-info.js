@@ -1,10 +1,10 @@
 const div = document.querySelector('#info');
+const toDeg = (rad) => rad*(180/Math.PI);
 
 let sextantAngle = 0;
-let time = null;
 
 const stringifyAngle = () => {
-    let total = Math.round(sextantAngle*60*10);
+    let total = Math.round(toDeg(sextantAngle)*60*10);
     const decmin = total%10;
     total = Math.round((total - decmin)/10);
     const min = total%60;
