@@ -16,7 +16,6 @@ const minVFovMap = {
 	[OPEN_VIEW]: Math.PI*0.194,
 	[SEXT_VIEW]: Math.PI*0.050,
 };
-const inRange = (val, min, max) => Math.max(min, Math.min(max, val));
 
 export const setCamera = (c) => {
     camera = c;
@@ -59,6 +58,7 @@ canvas.addEventListener('mousedown', e => {
 		ctrlKey,
 		shiftKey,
 		altKey,
+		sextantAngle: player.sextantAngle,
 	};
 });
 
@@ -76,9 +76,15 @@ canvas.addEventListener('mousemove', e => {
 	const dy = startClick.y - y;
 	const D360 = toRad(360);
 	const D90 = toRad(90);
-	const vrtRate = - startClick.hFov;
+
 	const hrzRate = startClick.hFov;
-	const altInc = dy/height*vrtRate;
-	player.alt = Math.min(startClick.alt + altInc, D90);
 	player.azm = (startClick.azm - dx/width*hrzRate + D360)%D360;
+
+	const vrtRate = - startClick.hFov;
+	const altInc = dy/height*vrtRate;
+	if (player.inSextantMode() && e.ctrlKey) {
+		player.sextantAngle = startClick.sextantAngle + altInc*0.75;
+	} else {
+		player.alt = Math.min(startClick.alt + altInc, D90);
+	}
 });

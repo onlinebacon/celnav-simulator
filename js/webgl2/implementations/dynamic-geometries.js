@@ -27,16 +27,15 @@ export const horizon = ({ dip, radius }) => {
 };
 
 const base_mag = -1.45;
-const base_rad = 0.003;
-const magToRad = (mag) => Math.pow(Math.pow(2.512, base_mag - mag), 0.25)*base_rad;
+const magToRad = (mag, maxRad) => Math.pow(Math.pow(2.512, base_mag - mag), 0.25)*maxRad;
 
-export const celestialSphere = (stars) => {
+export const celestialSphere = (stars, maxRad) => {
 	const nVertices = 5;
 	const attr = [];
 	const element = [];
 	let vCount = 0;
 	const addStar = ({ ra, dec, vmag }) => {
-		const rad = magToRad(vmag);
+		const rad = magToRad(vmag, maxRad);
 		const raAngle = ra/12*Math.PI;
 		const decAngle = dec/180*Math.PI;
 		const transform = new Mat4();

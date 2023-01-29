@@ -13,7 +13,11 @@ export const setCamera = (c) => camera = c;
 export const setPlayer = (p) => player = p;
 
 const drawFixedItems = (ctx, camera, side) => {
-	CelestialSphere.draw(ctx, camera, side);
+    if (player.inSextantMode()) {
+        CelestialSphere.drawSmall(ctx, camera, side);
+    } else {
+        CelestialSphere.drawBig(ctx, camera, side);
+    }
 	Horizon.draw(ctx, camera, side);
 };
 
@@ -22,8 +26,8 @@ const drawAllItems = (ctx, camera, side) => {
     SextantScope.draw(ctx, camera, side);
 };
 
-Webgl2.setFrame(function(ctx) {
-	camera.transform.clear().rotateX(-player.alt).rotateY(player.azm);
+const updateCamera = (alt) => {
+	camera.transform.clear().rotateX(-alt).rotateY(player.azm);
 	camera.vFov = player.vFov;
 	camera.update();
 	CelestialSphere.setOrientation({
@@ -31,13 +35,20 @@ Webgl2.setFrame(function(ctx) {
 		lon: player.lon,
 		ariesGHA: AstronomyEngine.getCurrentAriesGHA(),
 	});
+};
+
+Webgl2.setFrame(function(ctx) {
     if (player.inOpenViewMode()) {
+        updateCamera(player.alt);
         ctx.fullMode();
         drawFixedItems(ctx, camera, 'C');
     }
     if (player.inSextantMode()) {
+        updateCamera(player.alt);
         ctx.leftMode();
         drawAllItems(ctx, camera, 'L');
+
+        updateCamera(player.alt + player.sextantAngle);
         ctx.rightMode();
         drawAllItems(ctx, camera, 'R');
     }

@@ -2,7 +2,8 @@ import * as DynamicGeometries from '../dynamic-geometries.js';
 import * as Programs from '../programs.js';
 import { Mat4 } from '../../core/gl-math.js';
 
-let geometry = null;
+let big = null;
+let small = null;
 const progMap = {
     C: Programs.celestialSphere,
     L: Programs.celestialSphereL,
@@ -10,8 +11,12 @@ const progMap = {
 };
 const transform = new Mat4();
 
+const bigRad =   0.0025;
+const smallRad = 0.0008;
+
 export const build = (stars) => {
-    geometry = DynamicGeometries.celestialSphere(stars);
+    big = DynamicGeometries.celestialSphere(stars, bigRad);
+    small = DynamicGeometries.celestialSphere(stars, smallRad);
 };
 
 export const setOrientation = ({ lat, lon, ariesGHA }) => {
@@ -20,10 +25,19 @@ export const setOrientation = ({ lat, lon, ariesGHA }) => {
     transform.rotateX(-lat);
 };
 
-export const draw = (ctx, camera, side = 'C') => {
+const updateTransforms = (ctx, camera, side) => {
     const prog = progMap[side];
     ctx.useProgram(prog);
     prog.setMat4Uniform('transform', transform);
     prog.setMat4Uniform('projection', camera.projection);
-    ctx.drawGeometry(geometry);
+};
+
+export const drawBig = (ctx, camera, side = 'C') => {
+    updateTransforms(ctx, camera, side);
+    ctx.drawGeometry(big);
+};
+
+export const drawSmall = (ctx, camera, side = 'C') => {
+    updateTransforms(ctx, camera, side);
+    ctx.drawGeometry(small);
 };

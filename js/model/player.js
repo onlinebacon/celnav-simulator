@@ -15,9 +15,9 @@ export class Player {
         this.viewMode = OPEN_VIEW;
         this.vFovMap = {
             [OPEN_VIEW]: Math.PI*0.250,
-            [SEXT_VIEW]: Math.PI*0.070,
+            [SEXT_VIEW]: Math.PI*0.060,
         };
-        this.sextantAngle = 0.1;
+        this.sextantAngle = 0;
     }
     get vFov() {
         return this.vFovMap[this.viewMode];
