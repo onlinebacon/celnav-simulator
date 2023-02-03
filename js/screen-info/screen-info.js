@@ -13,11 +13,15 @@ const stringifyAngle = () => {
     return `${deg}° ${min + decmin/10}'`;
 };
 
+let lastText = null;
 const updateInfo = () => {
-    div.innerHTML = '';
-    div.innerHTML += 'Press S to toggle sextant mode<br>';
-    div.innerHTML += 'Ctrl + click and drag to adjust the angle<br>';
-    div.innerHTML += 'Sextant angle: ' + stringifyAngle();
+    let text = '';
+    text += 'Press S to toggle sextant mode<br>';
+    text += 'Ctrl + click and drag to adjust the angle<br>';
+    text += 'Sextant angle: ' + stringifyAngle();
+    if (text === lastText) return;
+    div.innerHTML = text;
+    lastText = text;
 };
 
 export const setSextantAngle = (angle) => {
