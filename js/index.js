@@ -4,6 +4,7 @@ import * as Horizon from './webgl2/implementations/items/horizon.js';
 import * as AstronomyEngine from './astronomy-engine/astronomy-engine.js';
 import * as Control from './control.js';
 import * as Scene from './scene.js';
+import * as Randomizer from './randomizer/randomizer.js';
 
 import calcDip from './support/calc-dip.js';
 
@@ -24,6 +25,8 @@ Scene.setPlayer(player);
 
 CelestialSphere.build(AstronomyEngine.getStars(1600));
 Horizon.build({ dip: calcDip(player.height) });
+
+Randomizer.randomizeSetup(player);
 
 const handleResize = () => {
 	const width = window.innerWidth;
