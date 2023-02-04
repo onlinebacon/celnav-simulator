@@ -12,6 +12,7 @@ export class Player {
         this.lon = 0;
         this.azm = 0;
         this.alt = 0;
+        this.height = 10;
         this.viewMode = OPEN_VIEW;
         this.vFovMap = {
             [OPEN_VIEW]: Math.PI*0.250,

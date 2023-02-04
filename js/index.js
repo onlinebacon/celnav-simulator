@@ -5,6 +5,8 @@ import * as AstronomyEngine from './astronomy-engine/astronomy-engine.js';
 import * as Control from './control.js';
 import * as Scene from './scene.js';
 
+import calcDip from './support/calc-dip.js';
+
 import { Camera } from './webgl2/core/camera.js';
 import { Player } from './model/player.js';
 
@@ -21,7 +23,7 @@ Scene.setCamera(camera);
 Scene.setPlayer(player);
 
 CelestialSphere.build(AstronomyEngine.getStars(1600));
-Horizon.build({ dip: toRad(6.2/60) });
+Horizon.build({ dip: calcDip(player.height) });
 
 const handleResize = () => {
 	const width = window.innerWidth;
