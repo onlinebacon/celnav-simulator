@@ -53,5 +53,5 @@ Webgl2.setFrame(function(ctx) {
         ctx.rightMode();
         drawAllItems(ctx, camera, 'R');
     }
-    ScreenInfo.setSextantAngle(player.sextantAngle);
+    ScreenInfo.setPlayerInfo(player);
 });
