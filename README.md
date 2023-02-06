@@ -15,7 +15,7 @@ This web page is currently in progess. So far this is what is available:
 - The position of stars being affected by standard atmospheric refracion
 - A randomization of your location and time that always end up in evening twilight
 
-## Next steps list
+## Next steps
 
 - Add to the astronomy engine functions to get up-to-dated celestial-body positions
 - Improve controls
