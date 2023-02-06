@@ -25,7 +25,7 @@ const interpolate = (value) => {
 
 export const build = ({ dip }) => {
     geometry = Geometries.horizon({ dip, radius });
-    interpolate(0.05);
+    interpolate(0.2);
 };
 
 export const draw = (ctx, camera, side = 'C') => {
