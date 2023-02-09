@@ -18,20 +18,20 @@ export const build = (stars) => {
 
 export const setOrientation = ({ lat, lon, ariesGHA }) => {
     transform.clear();
-    // transform.rotateZ(lon + ariesGHA);
-    // transform.rotateX(-lat);
+    transform.rotateZ(lon + ariesGHA);
+    transform.rotateX(-lat);
 };
 
-const updateTransforms = (ctx, camera, side) => {
+const updateUniforms = (ctx, camera, side) => {
     const prog = progMap[side];
     ctx.useProgram(prog);
     prog.setMat4Uniform('transform', transform);
     prog.setMat4Uniform('projection', camera.projection);
     prog.setFloatUniform('celSphRad', Constants.CEL_SPHERE_RAD);
-    prog.setFloatUniform('scaleStars', 1);
+    prog.setFloatUniform('scaleStars', Constants.STAR_VERT_REL_SIZE*Math.tan(camera.vFov/2)/Math.tan(Constants.STAR_ANGULAR_SIZE/2));
 };
 
 export const draw = (ctx, camera, side = 'C') => {
-    updateTransforms(ctx, camera, side);
+    updateUniforms(ctx, camera, side);
     ctx.drawGeometry(geometry);
 };

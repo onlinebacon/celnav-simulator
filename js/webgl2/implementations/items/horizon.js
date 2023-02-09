@@ -33,7 +33,7 @@ export const build = ({ dip }) => {
 
 export const draw = (ctx, camera, side = 'C') => {
     const prog = progMap[side]
-    // transform.clear().rotateY(camera.transform.getYRotationOfK());
+    transform.clear().rotateY(camera.transform.getYRotationOfK());
     ctx.useProgram(prog);
     prog.setVec3Uniform('color', color);
     prog.setMat4Uniform('transform', transform);

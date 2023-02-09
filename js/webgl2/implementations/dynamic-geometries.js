@@ -50,7 +50,7 @@ export const celestialSphere = (stars) => {
 		const mat4 = new Mat4().rotateX(decToXRot(dec)).rotateZ(raToZRot(ra));
 		const pivot = new Vec3([ 0, 1, 0 ]).apply(mat4);
 		const normalMag = normalizeMag(vmag);
-		const radScalar = Math.pow(normalMag, 0.25);
+		const radScalar = Math.pow(normalMag, 0.7);
 		const opacity = calcOpacity(normalMag, radScalar);
 		const rad = planarRad*radScalar;
 		for (let i=0; i<nVertices; ++i) {

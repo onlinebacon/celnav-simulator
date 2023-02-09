@@ -26,12 +26,8 @@ const drawAllItems = (ctx, camera, side) => {
     SextantScope.draw(ctx, camera, side);
 };
 
-const startedTime = Date.now();
-const elapsedTime = () => Date.now() - startedTime;
-
 const updateCamera = (alt) => {
-	// camera.transform.clear().rotateX(-alt).rotateY(player.azm);
-	camera.transform.clear().translate([ 0, 0, -3.5 ]).rotateX(0.5).rotateY(elapsedTime()*1e-3);
+	camera.transform.clear().rotateX(-alt).rotateY(player.azm);
 	camera.vFov = player.vFov;
 	camera.update();
 	CelestialSphere.setOrientation({
