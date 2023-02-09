@@ -17,11 +17,7 @@ export const setCamera = (c) => camera = c;
 export const setPlayer = (p) => player = p;
 
 const drawFixedItems = (ctx, camera, side) => {
-    if (player.inSextantMode()) {
-        CelestialSphere.drawSmall(ctx, camera, side);
-    } else {
-        CelestialSphere.drawBig(ctx, camera, side);
-    }
+    CelestialSphere.draw(ctx, camera, side);
 	Horizon.draw(ctx, camera, side);
 };
 
@@ -30,8 +26,12 @@ const drawAllItems = (ctx, camera, side) => {
     SextantScope.draw(ctx, camera, side);
 };
 
+const startedTime = Date.now();
+const elapsedTime = () => Date.now() - startedTime;
+
 const updateCamera = (alt) => {
-	camera.transform.clear().rotateX(-alt).rotateY(player.azm);
+	// camera.transform.clear().rotateX(-alt).rotateY(player.azm);
+	camera.transform.clear().translate([ 0, 0, -3.5 ]).rotateX(0.5).rotateY(elapsedTime()*1e-3);
 	camera.vFov = player.vFov;
 	camera.update();
 	CelestialSphere.setOrientation({
@@ -42,13 +42,12 @@ const updateCamera = (alt) => {
 };
 
 Webgl2.setFrame(function(ctx) {
+    updateCamera(player.alt);
     if (player.inOpenViewMode()) {
-        updateCamera(player.alt);
         ctx.fullMode();
         drawFixedItems(ctx, camera, 'C');
     }
     if (player.inSextantMode()) {
-        updateCamera(player.alt);
         ctx.leftMode();
         drawAllItems(ctx, camera, 'L');
 

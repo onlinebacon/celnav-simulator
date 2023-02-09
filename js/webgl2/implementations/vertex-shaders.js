@@ -1,3 +1,4 @@
+import Constants from '../../constants.js';
 import { VertexShader } from '../core/webgl2.js';
 
 const c1 = Math.PI/180;
@@ -15,12 +16,18 @@ const celSphereSrc = `
 	precision highp float;
 
 	layout (location = 0) in vec3 inVertex;
-	layout (location = 1) in vec3 inColor;
+	layout (location = 1) in vec3 inPivot;
+	layout (location = 2) in vec3 inColor;
+	layout (location = 3) in float inOpacity;
 
 	uniform mat4 transform;
 	uniform mat4 projection;
 
+	uniform float celSphRad;
+	uniform float scaleStars;
+
 	out vec3 color;
+	const vec3 bgColor = vec3(${ Constants.BG_COLOR.map(val => val.toFixed(3)) });
 
 	float correctY(float y) {
 		float h = asin(y)*${c2};
@@ -37,9 +44,11 @@ const celSphereSrc = `
 	}
 
 	void main() {
-		color = inColor;
-		vec3 vertex = inVertex*mat3(transform);
-		vertex = addRefraction(vertex);
+		color = mix(bgColor, inColor, inOpacity);
+		vec3 vertex = (inVertex - inPivot)*scaleStars + inPivot;
+		vertex *= celSphRad;
+		vertex = vertex*mat3(transform);
+		// vertex = addRefraction(vertex);
 		gl_Position = vec4(vertex, 1.0)*projection;
 		/* MAIN_END */
 	}
