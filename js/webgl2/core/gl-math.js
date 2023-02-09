@@ -348,4 +348,11 @@ export class Vec3 extends Array {
 		dst[2] = z*scale;
 		return dst;
 	}
+	add([ bx, by, bz ], dst = this) {
+		const [ ax, ay, az ] = this;
+		dst[0] = ax + bx;
+		dst[1] = ay + by;
+		dst[2] = az + bz;
+		return dst;
+	}
 }
