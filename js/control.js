@@ -43,6 +43,12 @@ window.addEventListener('keypress', e => {
 	}
 });
 
+canvas.addEventListener('contextmenu', e => {
+	if (!e.ctrlKey) return;
+	e.preventDefault();
+	e.stopPropagation();
+});
+
 canvas.addEventListener('mousedown', e => {
 	const { ctrlKey, shiftKey, altKey } = e;
 	if (e.button !== 0) return;
