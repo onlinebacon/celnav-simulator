@@ -51,6 +51,10 @@ canvas.addEventListener('mousedown', e => {
 	const y = e.offsetY;
 	const vFov = camera.vFov;
 	const hFov = vFov*camera.ratio;
+	if (e.ctrlKey) {
+		e.preventDefault();
+		e.stopPropagation();
+	}
 	startClick = {
 		x, y,
 		vFov, hFov,
