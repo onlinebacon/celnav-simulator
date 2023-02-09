@@ -6,19 +6,18 @@ import * as AstronomyEngine from './astronomy-engine/astronomy-engine.js';
 import * as ScreenInfo from './screen-info/screen-info.js';
 import { Camera } from './webgl2/core/camera.js';
 import { Player } from './model/player.js';
+import Constants from './constants.js';
 
 let camera = new Camera();
 let player = new Player();
+
+Webgl2.setBackgroundColor(Constants.BG_COLOR);
 
 export const setCamera = (c) => camera = c;
 export const setPlayer = (p) => player = p;
 
 const drawFixedItems = (ctx, camera, side) => {
-    if (player.inSextantMode()) {
-        CelestialSphere.drawSmall(ctx, camera, side);
-    } else {
-        CelestialSphere.drawBig(ctx, camera, side);
-    }
+    CelestialSphere.draw(ctx, camera, side);
 	Horizon.draw(ctx, camera, side);
 };
 
@@ -39,13 +38,12 @@ const updateCamera = (alt) => {
 };
 
 Webgl2.setFrame(function(ctx) {
+    updateCamera(player.alt);
     if (player.inOpenViewMode()) {
-        updateCamera(player.alt);
         ctx.fullMode();
         drawFixedItems(ctx, camera, 'C');
     }
     if (player.inSextantMode()) {
-        updateCamera(player.alt);
         ctx.leftMode();
         drawAllItems(ctx, camera, 'L');
 

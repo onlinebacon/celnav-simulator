@@ -1,3 +1,4 @@
+import Constants from '../../../constants.js';
 import { Mat4 } from '../../core/gl-math.js';
 import * as Geometries from '../dynamic-geometries.js';
 import * as Programs from '../programs.js';
@@ -9,7 +10,6 @@ const progMap = {
 };
 
 const transform = new Mat4();
-const radius = 1;
 const ocean = [ 0.1, 0.2, 0.3 ];
 const darkSky = [ 0.05, 0.06, 0.10 ];
 const color = [ 0, 0, 0 ];
@@ -24,8 +24,11 @@ const interpolate = (value) => {
 };
 
 export const build = ({ dip }) => {
-    geometry = Geometries.horizon({ dip, radius });
-    interpolate(0.2);
+    geometry = Geometries.horizon({
+        dip,
+        radius: Constants.HORIZON_RAD,
+    });
+    interpolate(1);
 };
 
 export const draw = (ctx, camera, side = 'C') => {
