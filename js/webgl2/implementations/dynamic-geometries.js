@@ -26,8 +26,8 @@ export const horizon = ({ dip, radius }) => {
 	});
 };
 
-const base_mag = -1.45;
-const magToRad = (mag, maxRad) => Math.pow(Math.pow(2.512, base_mag - mag), 0.25)*maxRad;
+const MIN_MAG = -1.45;
+const magToRad = (mag) => Math.pow(Math.pow(2.512, MIN_MAG - mag), 0.25);
 
 export const celestialSphere = () => {
 	const attr = [];
