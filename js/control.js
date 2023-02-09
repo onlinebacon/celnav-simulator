@@ -43,6 +43,12 @@ window.addEventListener('keypress', e => {
 	}
 });
 
+canvas.addEventListener('contextmenu', e => {
+	if (!e.ctrlKey) return;
+	e.preventDefault();
+	e.stopPropagation();
+});
+
 canvas.addEventListener('mousedown', e => {
 	const { ctrlKey, shiftKey, altKey } = e;
 	if (e.button !== 0) return;
@@ -51,6 +57,10 @@ canvas.addEventListener('mousedown', e => {
 	const y = e.offsetY;
 	const vFov = camera.vFov;
 	const hFov = vFov*camera.ratio;
+	if (e.ctrlKey) {
+		e.preventDefault();
+		e.stopPropagation();
+	}
 	startClick = {
 		x, y,
 		vFov, hFov,
