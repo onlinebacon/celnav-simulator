@@ -5,7 +5,7 @@ let frame = () => {};
 
 gl.enable(gl.DEPTH_TEST);
 gl.viewport(0, 0, canvas.width, canvas.height);
-gl.clearColor(0.05, 0.06, 0.10, 1);
+gl.clearColor(0, 0, 0, 1);
 gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
 
 class Shader {
@@ -173,4 +173,8 @@ export const setFrame = (fn) => {
  */
 export const once = (fn) => {
 	fn(ctx);
+};
+
+export const setBackgroundColor = ([ r, g, b ]) => {
+	gl.clearColor(r, g, b, 1);
 };
