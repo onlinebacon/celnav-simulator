@@ -33,7 +33,7 @@ const updateInfo = () => {
     text += 'Sextant angle: ' + stringifyAngle(sextantAngle) + '<br>';
     text += 'Time: ' + getTextTime() + '<br>';
     text += 'Height: ' + height + ' meters<br>';
-    if (text === lastText) return;
+    // if (text === lastText) return;
     div.innerHTML = text;
     lastText = text;
 };
