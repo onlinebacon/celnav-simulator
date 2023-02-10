@@ -46,9 +46,9 @@ const celSphereSrc = `
 	void main() {
 		color = vec4(inColor, inOpacity);
 		vec3 vertex = (inVertex - inPivot)*scaleStars + inPivot;
-		vertex *= celSphRad;
 		vertex = vertex*mat3(transform);
-		// vertex = addRefraction(vertex);
+		vertex = addRefraction(vertex);
+		vertex *= celSphRad;
 		gl_Position = vec4(vertex, 1.0)*projection;
 		/* MAIN_END */
 	}
