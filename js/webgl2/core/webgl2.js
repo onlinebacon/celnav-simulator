@@ -4,9 +4,11 @@ export const gl = canvas.getContext('webgl2');
 let frame = () => {};
 
 gl.enable(gl.DEPTH_TEST);
+gl.enable(gl.BLEND);
 gl.viewport(0, 0, canvas.width, canvas.height);
 gl.clearColor(0, 0, 0, 1);
 gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
 class Shader {
 	constructor(src, type) {

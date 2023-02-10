@@ -17,26 +17,26 @@ export const celestialSphereR = new Program({
 
 export const variableColorGeometry = new Program({
 	vertexShader: VertexShaders.justGeometry,
-	fragShader:   FragShaders.justColor,
+	fragShader:   FragShaders.uniformColor,
 });
 export const variableColorGeometryL = new Program({
 	vertexShader: VertexShaders.justGeometryL,
-	fragShader:   FragShaders.justColor,
+	fragShader:   FragShaders.uniformColor,
 });
 export const variableColorGeometryR = new Program({
 	vertexShader: VertexShaders.justGeometryR,
-	fragShader:   FragShaders.justColor,
+	fragShader:   FragShaders.uniformColor,
 });
 
 export const orthographic = new Program({
 	vertexShader: VertexShaders.orthographic,
-	fragShader:   FragShaders.justColor,
+	fragShader:   FragShaders.uniformColor,
 });
 export const orthographicL = new Program({
 	vertexShader: VertexShaders.orthographicL,
-	fragShader:   FragShaders.justColor,
+	fragShader:   FragShaders.uniformColor,
 });
 export const orthographicR = new Program({
 	vertexShader: VertexShaders.orthographicR,
-	fragShader:   FragShaders.justColor,
+	fragShader:   FragShaders.uniformColor,
 });

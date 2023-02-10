@@ -26,7 +26,7 @@ const celSphereSrc = `
 	uniform float celSphRad;
 	uniform float scaleStars;
 
-	out vec3 color;
+	out vec4 color;
 	const vec3 bgColor = vec3(${ Constants.BG_COLOR.map(val => val.toFixed(3)) });
 
 	float correctY(float y) {
@@ -44,7 +44,7 @@ const celSphereSrc = `
 	}
 
 	void main() {
-		color = mix(bgColor, inColor, inOpacity);
+		color = vec4(inColor, inOpacity);
 		vec3 vertex = (inVertex - inPivot)*scaleStars + inPivot;
 		vertex *= celSphRad;
 		vertex = vertex*mat3(transform);
@@ -80,10 +80,10 @@ const orthographicSrc = `
 	uniform float scale;
 	uniform float screenRatio;
 
-	out vec3 color;
+	out vec4 color;
 
 	void main() {
-		color = inColor;
+		color = vec4(inColor, 1.0);
 		vec3 vertex = inVertex;
 		vertex.x /= screenRatio;
 		vertex.xy *= scale;
