@@ -121,6 +121,6 @@ document.querySelector('#submit_button').addEventListener('click', async () => {
 	const target = [ player.lat, player.lon ];
 	const distance = haversine(coord, target)*Constants.EARTH_RADIUS/Constants.MILE;
 	const short = (distance.toPrecision(3)*1).toFixed(1)*1;
-	const text = `Your fix is off by ${short <= 6 ? 'only ' : ''} miles`;
+	const text = `Your fix is off by ${short <= 6 ? 'only ' + short : short} miles`;
 	DialogWindow.inform(text);
 });
