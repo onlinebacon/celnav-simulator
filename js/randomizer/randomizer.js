@@ -23,7 +23,7 @@ export const randomizeSetup = async (player) => {
 		const sunGP = AstronomyEngine.getGP(sunRaDec);
 		const antipode = antipodal(sunGP);
 		const gp = inverseHaversine(antipode, randomAzm(), twilightDist);
-		if (coordIsOverWater(gp)) {
+		if (await coordIsOverWater(gp)) {
 			const [ lat, lon ] = gp;
 			player.lat = lat;
 			player.lon = lon;
