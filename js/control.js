@@ -1,6 +1,9 @@
 import { canvas } from './webgl2/core/webgl2.js';
 import { Camera } from './webgl2/core/camera.js';
 import { Player, OPEN_VIEW, SEXT_VIEW } from './model/player.js';
+import { haversine } from './support/coord-math.js';
+import * as DialogWindow from './dialog-window/dialog-window.js';
+import Constants from './constants.js';
 
 const toRad = (deg) => deg*(Math.PI/180);
 
@@ -108,4 +111,16 @@ canvas.addEventListener('mousemove', e => {
 	} else {
 		player.alt = Math.max(MIN_ALT, Math.min(startClick.alt + altInc, D90));
 	}
+});
+
+document.querySelector('#submit_button').addEventListener('click', async () => {
+	const coord = await DialogWindow.submitCoord();
+	if (!coord) {
+		return;
+	}
+	const target = [ player.lat, player.lon ];
+	const distance = haversine(coord, target)*Constants.EARTH_RADIUS/Constants.MILE;
+	const short = (distance.toPrecision(3)*1).toFixed(1)*1;
+	const text = `Your fix is off by ${short <= 6 ? 'only ' : ''} miles`;
+	DialogWindow.inform(text);
 });

@@ -3,13 +3,19 @@ body {
     overflow: hidden;
     background-color: #000;
 }
-#info {
+#info, #submit_button {
     position: fixed;
-    left: 10px;
     bottom: 10px;
     background-color: rgba(0, 0, 0, 0.5);
     padding: 10px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     font-family: monospace;
     color: #ccc;
+}
+#info {
+    left: 10px;
+}
+#submit_button {
+    right: 10px;
+    cursor: pointer;
 }

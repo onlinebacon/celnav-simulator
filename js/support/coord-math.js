@@ -68,3 +68,8 @@ export const inverseHaversine = (coord, azm, dist) => {
 	vertex = applyLatLonToVertex(vertex, coord);
 	return toCoord(normalize(vertex));
 };
+
+export const haversine = ([ aLat, aLon ], [ bLat, bLon ]) => acos(
+	sin(aLat)*sin(bLat) +
+	cos(aLat)*cos(bLat)*cos(aLon - bLon)
+);
