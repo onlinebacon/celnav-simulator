@@ -16,10 +16,10 @@ This web page is currently in progess. So far this is what is available:
 - A randomization of your location and time that always end up in evening twilight
 - Stars size dynamically change to keep them always looking close to a point
 - Colored celestial bodies
+- Add an interface for the user to check his coordinates
 
 ## Next steps
 
-- Add an interface for the user to check his coordinates
 - Add dynamic colors to the sky to match the twilight
 - Add to the astronomy engine functions to get up-to-dated celestial-body positions
 - Add planets
