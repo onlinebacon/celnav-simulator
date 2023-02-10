@@ -15,12 +15,16 @@ This web page is currently in progess. So far this is what is available:
 - The position of stars being affected by standard atmospheric refracion
 - A randomization of your location and time that always end up in evening twilight
 - Stars size dynamically change to keep them always looking close to a point
+- Colored celestial bodies
 
 ## Next steps
 
+- Add an interface for the user to check his coordinates
 - Add dynamic colors to the sky to match the twilight
 - Add to the astronomy engine functions to get up-to-dated celestial-body positions
-- Color the celestial bodies
+- Add planets
+- Add the Moon
+- Add the Sun
 - Improve controls
 - Add some obscuration to the sky above the horizon
 - Use "global uniforms" for webgl2 simplicity

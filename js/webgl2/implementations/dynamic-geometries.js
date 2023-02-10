@@ -1,6 +1,7 @@
 import Constants from '../../constants.js';
 import { Mat4, Vec3 } from '../core/gl-math.js';
 import { Geometry } from '../core/webgl2.js';
+import bvToRgb from '../../support/bv-to-rgb.js';
 
 export const horizon = ({ dip, radius }) => {
 	const tanDip = Math.tan(dip);
@@ -44,8 +45,8 @@ export const celestialSphere = (stars) => {
 	let nStars = 0;
 	const decToXRot = (dec) => dec/180*Math.PI;
 	const raToZRot = (ra) => - ra/12*Math.PI;
-	const addStar = ({ ra, dec, vmag }) => {
-		const color = [ 1, 1, 1 ];
+	const addStar = ({ ra, dec, vmag, bv }) => {
+		const color = bvToRgb(bv);
 		const planarRad = Math.tan(Constants.STAR_ANGULAR_SIZE/2);
 		const mat4 = new Mat4().rotateX(decToXRot(dec)).rotateZ(raToZRot(ra));
 		const pivot = new Vec3([ 0, 1, 0 ]).apply(mat4);
