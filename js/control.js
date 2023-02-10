@@ -8,13 +8,21 @@ let camera = new Camera();
 let player = new Player();
 let startClick = null;
 
-const maxVFovMap = {
-	[OPEN_VIEW]: Math.PI*0.333,
-	[SEXT_VIEW]: Math.PI*0.085,
-};
+const openRange = [ 0.5, 1.0 ];
+const sextRange = [ 0.1, 0.2 ];
 const minVFovMap = {
-	[OPEN_VIEW]: Math.PI*0.194,
-	[SEXT_VIEW]: Math.PI*0.050,
+	[OPEN_VIEW]: openRange[0],
+	[SEXT_VIEW]: sextRange[0],
+};
+const maxVFovMap = {
+	[OPEN_VIEW]: openRange[1],
+	[SEXT_VIEW]: sextRange[1],
+};
+
+const getAverageVFov = (type) => {
+	const min = minVFovMap[type];
+	const max = maxVFovMap[type];
+	return (min + max)/2;
 };
 
 export const setCamera = (c) => {
@@ -23,6 +31,8 @@ export const setCamera = (c) => {
 
 export const setPlayer = (p) => {
     player = p;
+	player.vFovMap[OPEN_VIEW] = getAverageVFov(OPEN_VIEW);
+	player.vFovMap[SEXT_VIEW] = getAverageVFov(SEXT_VIEW);
 };
 
 window.addEventListener('wheel', e => {
