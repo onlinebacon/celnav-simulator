@@ -28,7 +28,7 @@ export const build = ({ dip }) => {
         dip,
         radius: Constants.HORIZON_RAD,
     });
-    interpolate(1);
+    interpolate(0.17);
 };
 
 export const draw = (ctx, camera, side = 'C') => {
