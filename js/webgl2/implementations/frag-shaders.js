@@ -13,7 +13,7 @@ export const coloredGeometry = new FragShader(`
 	}
 `);
 
-export const uniformColor = new FragShader(`
+export const justColor = new FragShader(`
 	#version 300 es
 	precision highp float;
 

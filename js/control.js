@@ -18,6 +18,7 @@ const maxVFovMap = {
 	[OPEN_VIEW]: openRange[1],
 	[SEXT_VIEW]: sextRange[1],
 };
+const MIN_ALT = - Math.PI/4;
 
 const getAverageVFov = (type) => {
 	const min = minVFovMap[type];
@@ -105,6 +106,6 @@ canvas.addEventListener('mousemove', e => {
 	if (player.inSextantMode() && e.ctrlKey) {
 		player.sextantAngle = startClick.sextantAngle + altInc*0.75;
 	} else {
-		player.alt = Math.min(startClick.alt + altInc, D90);
+		player.alt = Math.max(MIN_ALT, Math.min(startClick.alt + altInc, D90));
 	}
 });

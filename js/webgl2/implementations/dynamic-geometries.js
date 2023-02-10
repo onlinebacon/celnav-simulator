@@ -11,7 +11,7 @@ export const horizon = ({ dip, radius }) => {
 	const n = 50;
 	for (let i=0; i<=n; ++i) {
 		const norm = 2*i/n - 1;
-		const shift = norm*Math.pow(Math.abs(norm), 2);
+		const shift = norm*Math.pow(Math.abs(norm), 1.5);
 		const angle = Math.PI*0.5*shift;
 		const x = Math.sin(angle)*topRadius;
 		const z = Math.cos(angle)*topRadius;

@@ -27,7 +27,6 @@ const celSphereSrc = `
 	uniform float scaleStars;
 
 	out vec4 color;
-	const vec3 bgColor = vec3(${ Constants.BG_COLOR.map(val => val.toFixed(3)) });
 
 	float correctY(float y) {
 		float h = asin(y)*${c2};
@@ -93,6 +92,43 @@ const orthographicSrc = `
 	}
 `;
 
+const skyBgSrc = `
+	#version 300 es
+	precision highp float;
+
+	layout (location = 0) in vec3 inVertex;
+	layout (location = 1) in float azm;
+	layout (location = 2) in float alt;
+
+	uniform mat4 transform;
+	uniform mat4 projection;
+
+	out vec4 color;
+
+	float mixture(float val0, float val1, float out0, float out1, float val) {
+		float normal = (val - val0)/(val1 - val0);
+		normal = max(0.0, normal);
+		normal = min(1.0, normal);
+		return out0 + (out1 - out0)*normal;
+	}
+
+	float sqr(float x) {
+		return x*x;
+	}
+
+	vec3 azmAltToColor(float azm, float alt) {
+		vec3 color = vec3(${ Constants.BG_COLOR.map(val => val.toFixed(3)) });
+		color += vec3(0.8, 0.9, 1.0)*sqr(mixture(0.0, ${Math.PI/2}, 0.2, 0.0, alt));
+		return color;
+	}
+
+	void main() {
+		color = vec4(azmAltToColor(azm, alt), 1.0);
+		gl_Position = vec4(inVertex, 1.0)*transform*projection;
+		/* MAIN_END */
+	}
+`;
+
 const sideVersion = (src, addX) => {
 	src = src.replace(/\/\*\s*MAIN_END\s*\*\//, sideProjection(addX));
 	return new VertexShader(src);
@@ -112,3 +148,7 @@ export const justGeometryR = sideR(justGeometrySrc);
 export const orthographic = new VertexShader(orthographicSrc);
 export const orthographicL = sideL(orthographicSrc);
 export const orthographicR = sideR(orthographicSrc);
+
+export const skyBg = new VertexShader(skyBgSrc);
+export const skyBgL = sideL(skyBgSrc);
+export const skyBgR = sideR(skyBgSrc);

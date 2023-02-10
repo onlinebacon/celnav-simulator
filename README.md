@@ -23,3 +23,4 @@ This web page is currently in progess. So far this is what is available:
 - Color the celestial bodies
 - Add dynamic colors to the sky to match the twilight
 - Add some obscuration to the sky above the horizon
+- Use "global uniforms" for webgl2 simplicity
