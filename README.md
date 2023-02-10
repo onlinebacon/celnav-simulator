@@ -18,9 +18,9 @@ This web page is currently in progess. So far this is what is available:
 
 ## Next steps
 
-- Add to the astronomy engine functions to get up-to-dated celestial-body positions
-- Improve controls
-- Color the celestial bodies
 - Add dynamic colors to the sky to match the twilight
+- Add to the astronomy engine functions to get up-to-dated celestial-body positions
+- Color the celestial bodies
+- Improve controls
 - Add some obscuration to the sky above the horizon
 - Use "global uniforms" for webgl2 simplicity
