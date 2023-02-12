@@ -1,50 +1,72 @@
 from skyfield.api import Star, load
 from skyfield.data import hipparcos
+import datetime
 
 planets = load('de421.bsp')
-ts = load.timescale()
-earth = planets['earth']
-
 with load.open(hipparcos.URL) as f:
 	df = hipparcos.load_dataframe(f)
 
-min_mag = -1
+min_mag = 5
 
 bright_df = df[df['magnitude'] <= min_mag]
 bright_stars = Star.from_dataframe(bright_df)
-
 csv = bright_df.to_csv().strip().split('\n')
+
 hips = []
 mags = []
+outputs = []
 
 for i in range(len(csv) - 1):
 	cols = csv[i + 1].split(',')
 	hips.append(int(cols[0]))
 	mags.append(float(cols[1]))
 
-excepted = 'hip,mag,ra,dec\n'
-excepted += '32349,-1.44,6.7695722222222222,-16.747944444444446\n'
+class Output:
+	def __init__(self, i) -> None:
+		self.hip = hips[i]
+		self.mag = mags[i]
+		self.raList = []
+		self.decList = []
 
-def extract(y, m, d, h):
-	t = ts.utc(y, m, d, h, 0, 0)
+for i in range(len(hips)):
+	outputs.append(Output(i))
+
+ts = load.timescale()
+earth = planets['earth']
+
+def extract(year, month, day, hour, min, sec):
+	t = ts.utc(year, month, day, hour, min, sec)
 	ra_list, dec_list, _ = earth.at(t).observe(bright_stars).radec()
 	ra_list = ra_list.hours
 	dec_list = dec_list.degrees
-	text = 'hip,mag,ra,dec\n'
 	for i in range(len(hips)):
-		hip = hips[i]
-		mag = mags[i]
-		ra = ra_list[i]
-		dec = dec_list[i]
-		line = str(hip) + ',' + str(mag) + ',' + str(ra) + ',' + str(dec)
-		text += line + '\n'
-	print('Expected:')
-	print(excepted)
-	print('Actual:')
-	print(text)
-	# fname = 'stars-' + str(y) + '-' + str(m) + '-' + str(d) + '-' + str(h) + '.csv'
-	# f = open(fname, 'w')
-	# f.write(text)
-	# f.close()
+		outputs[i].raList.append(ra_list[i])
+		outputs[i].decList.append(dec_list[i])
 
-extract(2023, 1, 1, 0)
+startTime = 1672531200
+endTime = 1704067200
+interval = 3*31*24*60*60
+
+time = startTime
+while True:
+	dt = datetime.datetime.utcfromtimestamp(time)
+	extract(dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second)
+	if time >= endTime:
+		break
+	time += interval
+
+src = '[\n'
+for output in outputs:
+	src += '\t{\n'
+	src += '\t\thip: ' + str(output.hip) + ',\n'
+	src += '\t\tmag: ' + str(output.mag) + ',\n'
+	src += '\t\tstartTime: ' + str(startTime) + ',\n'
+	src += '\t\tinterval: ' + str(interval) + ',\n'
+	src += '\t\traList: ' + str(output.raList) + ',\n'
+	src += '\t\tdecList: ' + str(output.decList) + ',\n'
+	src += '\t},\n'
+src += '];\n'
+
+f = open('./stars-skyfield-data.js', 'w')
+f.write(src)
+f.close()
