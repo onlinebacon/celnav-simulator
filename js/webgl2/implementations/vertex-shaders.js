@@ -92,7 +92,7 @@ const orthographicSrc = `
 	}
 `;
 
-const skyBgSrc = `
+const atmosphereSrc = `
 	#version 300 es
 	precision highp float;
 
@@ -116,14 +116,10 @@ const skyBgSrc = `
 		return x*x;
 	}
 
-	vec3 azmAltToColor(float azm, float alt) {
-		vec3 color = vec3(${ Constants.BG_COLOR.map(val => val.toFixed(3)) });
-		color += vec3(0.8, 0.9, 1.0)*sqr(mixture(0.0, ${Math.PI/2}, 0.2, 0.0, alt));
-		return color;
-	}
-
 	void main() {
-		color = vec4(azmAltToColor(azm, alt), 1.0);
+		vec3 rgb = vec3(0.8, 0.9, 1.0);
+		float alpha = sqr(mixture(0.0, ${Math.PI/2}, 0.2, 0.0, alt));
+		color = vec4(rgb, alpha);
 		gl_Position = vec4(inVertex, 1.0)*transform*projection;
 		/* MAIN_END */
 	}
@@ -149,6 +145,6 @@ export const orthographic = new VertexShader(orthographicSrc);
 export const orthographicL = sideL(orthographicSrc);
 export const orthographicR = sideR(orthographicSrc);
 
-export const skyBg = new VertexShader(skyBgSrc);
-export const skyBgL = sideL(skyBgSrc);
-export const skyBgR = sideR(skyBgSrc);
+export const atmosphere = new VertexShader(atmosphereSrc);
+export const atmosphereL = sideL(atmosphereSrc);
+export const atmosphereR = sideR(atmosphereSrc);

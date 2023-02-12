@@ -41,18 +41,18 @@ const buildSextantScope = () => {
 	});
 };
 
-export const buildSkyBg = () => {
+const buildAtmosphere = () => {
 	const attr = [];
 	const element = [];
 	const nRings = 30;
 	const nSegments = 60;
 	const maxZenith = Math.PI/2 + Constants.MAX_DIP;
-	const SKY_BG_RAD = 1;
+	const atmosphereRadius = Constants.ATMOSPHERE_RAD;
 	for (let i=1; i<=nRings; ++i) {
 		const zenith = i/nRings*maxZenith;
 		const alt = Math.PI/2 - zenith;
-		const yRad = Math.sin(zenith)*SKY_BG_RAD;
-		const y = Math.cos(zenith)*SKY_BG_RAD;
+		const yRad = Math.sin(zenith)*atmosphereRadius;
+		const y = Math.cos(zenith)*atmosphereRadius;
 		for (let j=0; j<nSegments; ++j) {
 			const azm = j/nSegments*Math.PI*2;
 			const x = Math.sin(azm)*yRad;
@@ -75,7 +75,7 @@ export const buildSkyBg = () => {
 		}
 	}
 	const total = nSegments*nRings;
-	attr.push(0, SKY_BG_RAD, 0, 0, Math.PI/2);
+	attr.push(0, atmosphereRadius, 0, 0, Math.PI/2);
 	for (let i=0; i<nSegments; ++i) {
 		const j = (i + 1)%nSegments;
 		element.push(total, j, i);
@@ -84,4 +84,4 @@ export const buildSkyBg = () => {
 };
 
 export const sextantScope = buildSextantScope();
-export const skyBg = buildSkyBg();
+export const atmosphere = buildAtmosphere();

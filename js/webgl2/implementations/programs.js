@@ -41,15 +41,15 @@ export const orthographicR = new Program({
 	fragShader:   FragShaders.justColor,
 });
 
-export const skyBg = new Program({
-	vertexShader: VertexShaders.skyBg,
+export const atmosphere = new Program({
+	vertexShader: VertexShaders.atmosphere,
 	fragShader:   FragShaders.coloredGeometry,
 });
-export const skyBgL = new Program({
-	vertexShader: VertexShaders.skyBgL,
+export const atmosphereL = new Program({
+	vertexShader: VertexShaders.atmosphereL,
 	fragShader:   FragShaders.coloredGeometry,
 });
-export const skyBgR = new Program({
-	vertexShader: VertexShaders.skyBgR,
+export const atmosphereR = new Program({
+	vertexShader: VertexShaders.atmosphereR,
 	fragShader:   FragShaders.coloredGeometry,
 });

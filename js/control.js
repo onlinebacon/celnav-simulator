@@ -37,6 +37,7 @@ export const setPlayer = (p) => {
     player = p;
 	player.vFovMap[OPEN_VIEW] = getAverageVFov(OPEN_VIEW);
 	player.vFovMap[SEXT_VIEW] = getAverageVFov(SEXT_VIEW);
+	window.player = player
 };
 
 window.addEventListener('wheel', e => {
@@ -119,7 +120,7 @@ document.querySelector('#submit_button').addEventListener('click', async () => {
 		return;
 	}
 	const target = [ player.lat, player.lon ];
-	const distance = haversine(coord, target)*Constants.EARTH_RADIUS/Constants.MILE;
+	const distance = haversine(coord, target)*Constants.EARTH_RAD/Constants.MILE;
 	const short = (distance.toPrecision(3)*1).toFixed(1)*1;
 	const text = `Your fix is off by ${short <= 6 ? 'only ' + short : short} miles`;
 	DialogWindow.inform(text);

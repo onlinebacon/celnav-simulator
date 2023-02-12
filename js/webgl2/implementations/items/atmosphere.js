@@ -1,5 +1,5 @@
-import { skyBg as prog } from '../programs.js';
-import { skyBg as geometry } from '../static-geometries.js';
+import { atmosphere as prog } from '../programs.js';
+import { atmosphere as geometry } from '../static-geometries.js';
 import { Mat4 } from '../../core/gl-math.js';
 
 const transform = new Mat4();

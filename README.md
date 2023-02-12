@@ -21,11 +21,11 @@ This web page is currently in progess. So far this is what is available:
 
 ## Next steps
 
+- Add planets
 - Links with preloaded coordinates
 - Improve stars/planets catalogue accuracy
 - Prevent sextant from picking negative angles
 - Add dynamic colors to the sky to match the twilight
-- Add planets
 - Add the Moon
 - Add the Sun
 - Improve controls

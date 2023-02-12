@@ -2,7 +2,7 @@ import * as Webgl2 from './webgl2/core/webgl2.js';
 import * as CelestialSphere from './webgl2/implementations/items/celestial-sphere.js';
 import * as Horizon from './webgl2/implementations/items/horizon.js';
 import * as SextantScope from './webgl2/implementations/items/sextant-scope.js';
-import * as SkyBg from './webgl2/implementations/items/sky-background.js';
+import * as Atmosphere from './webgl2/implementations/items/atmosphere.js';
 import * as AstronomyEngine from './astronomy-engine/astronomy-engine.js';
 import * as ScreenInfo from './screen-info/screen-info.js';
 import { Camera } from './webgl2/core/camera.js';
@@ -18,8 +18,8 @@ export const setCamera = (c) => camera = c;
 export const setPlayer = (p) => player = p;
 
 const drawFixedItems = (ctx, camera, side) => {
-    SkyBg.draw(ctx, camera, side);
     CelestialSphere.draw(ctx, camera, side);
+    Atmosphere.draw(ctx, camera, side);
 	Horizon.draw(ctx, camera, side);
 };
 
