@@ -5,6 +5,7 @@ export default {
     STAR_ANGULAR_SIZE: 0.15/180*Math.PI,
     STAR_VERT_REL_SIZE: 0.005,
     BG_COLOR: [ 0.05, 0.06, 0.10 ],
+    WATER_COLOR: [ 0.053, 0.072, 0.11 ],
     MAX_DIP: 2/180*Math.PI,
     EARTH_RAD: 6.3710088e6,
     MILE: 1609.344,
