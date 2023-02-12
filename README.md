@@ -21,6 +21,8 @@ This web page is currently in progess. So far this is what is available:
 ## Next steps
 
 - Add to the astronomy engine functions to get up-to-dated celestial-body positions
+- Improve stars/planets catalogue accuracy
+- Prevent sextant from picking negative angles
 - Add dynamic colors to the sky to match the twilight
 - Add planets
 - Add the Moon
