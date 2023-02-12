@@ -40,8 +40,10 @@ def extract(year, month, day, hour, min, sec):
 	ra_list = ra_list.hours
 	dec_list = dec_list.degrees
 	for i in range(len(hips)):
-		outputs[i].raList.append(ra_list[i])
-		outputs[i].decList.append(dec_list[i])
+		ra = ra_list[i]
+		dec = dec_list[i]
+		outputs[i].raList.append(ra)
+		outputs[i].decList.append(dec)
 
 startTime = 1672531200
 endTime = 1704067200
@@ -55,18 +57,24 @@ while True:
 		break
 	time += interval
 
-src = '[\n'
-for output in outputs:
-	src += '\t{\n'
-	src += '\t\thip: ' + str(output.hip) + ',\n'
-	src += '\t\tmag: ' + str(output.mag) + ',\n'
-	src += '\t\tstartTime: ' + str(startTime) + ',\n'
-	src += '\t\tinterval: ' + str(interval) + ',\n'
-	src += '\t\traList: ' + str(output.raList) + ',\n'
-	src += '\t\tdecList: ' + str(output.decList) + ',\n'
-	src += '\t},\n'
-src += '];\n'
+src = '[{\n'
+for i in range(len(outputs)):
+	output = outputs[i]
+	if i != 0:
+		src += '},{\n'
+	raList = str(output.raList)
+	decList = str(output.decList)
+	if raList.find('nan') != -1:
+		raList = 'null'
+		decList = 'null'
+	src += '\t"hip":' + str(output.hip) + ',\n'
+	src += '\t"mag":' + str(output.mag) + ',\n'
+	src += '\t"startTime":' + str(startTime) + ',\n'
+	src += '\t"interval":' + str(interval) + ',\n'
+	src += '\t"raList":' + raList + ',\n'
+	src += '\t"decList":' + decList + '\n'
+src += '}]\n'
 
-f = open('./stars-skyfield-data.js', 'w')
+f = open('./stars-skyfield-data.json', 'w')
 f.write(src)
 f.close()

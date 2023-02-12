@@ -23,10 +23,7 @@ Control.setPlayer(player);
 Scene.setCamera(camera);
 Scene.setPlayer(player);
 
-CelestialSphere.build(AstronomyEngine.getStars(1600));
 Horizon.build({ dip: calcDip(player.height) });
-
-Randomizer.randomizeSetup(player);
 
 const handleResize = () => {
 	const width = window.innerWidth;
@@ -35,7 +32,12 @@ const handleResize = () => {
 	Webgl2.resize(width, height);
 };
 
-document.body.appendChild(Webgl2.canvas);
+Randomizer.randomizeSetup(player).then(() => {
+	document.body.appendChild(Webgl2.canvas);
+	CelestialSphere.build(AstronomyEngine.getStars(1600));
+	Webgl2.start();
+});
+
 window.addEventListener('resize', handleResize);
 
 handleResize();

@@ -148,8 +148,10 @@ const render = () => {
 	frame(ctx);
 };
 
+let started = false;
+
 const frameLoop = () => {
-	render();
+	if (started) render();
 	requestAnimationFrame(frameLoop);
 };
 
@@ -179,4 +181,8 @@ export const once = (fn) => {
 
 export const setBackgroundColor = ([ r, g, b ]) => {
 	gl.clearColor(r, g, b, 1);
+};
+
+export const start = () => {
+	started = true;
 };

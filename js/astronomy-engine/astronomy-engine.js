@@ -4,6 +4,11 @@ import Interpolator from './interpolator.js';
 
 const sunInterpolator = new Interpolator(SunData);
 
+const starInterpolators = Stars.map(star => {
+	const interpolator = new Interpolator(star);
+	return { star, interpolator };
+});
+
 const { PI } = Math;
 const TAU = PI*2;
 
@@ -47,7 +52,12 @@ export const getGP = ({ ra, dec }) => {
 };
 
 export const getStars = (size) => {
-	return Stars.slice(0, size);
+	return starInterpolators.slice(0, size).map(item => {
+		const { interpolator, star } = item;
+		const { mag: vmag, bv } = star;
+		const { ra, dec } = interpolator.raDecAt(now()/1000);
+		return { vmag, bv, ra, dec };
+	});
 };
 
 export const setTime = (time) => {
