@@ -12,7 +12,7 @@ let player = new Player();
 let startClick = null;
 
 const openRange = [ 0.5, 1.0 ];
-const sextRange = [ 0.1, 0.2 ];
+const sextRange = [ 0.05, 0.15 ];
 const minVFovMap = {
 	[OPEN_VIEW]: openRange[0],
 	[SEXT_VIEW]: sextRange[0],
