@@ -10,7 +10,7 @@ const progMap = {
 };
 
 const transform = new Mat4();
-const ocean = [ 0.1, 0.2, 0.3 ];
+const ocean = [ 0.1, 0.3, 0.3 ];
 const darkSky = [ 0.05, 0.06, 0.10 ];
 const color = [ 0, 0, 0 ];
 
@@ -28,7 +28,7 @@ export const build = ({ dip }) => {
         dip,
         radius: Constants.HORIZON_RAD,
     });
-    interpolate(0.17);
+    interpolate(0.05);
 };
 
 export const draw = (ctx, camera, side = 'C') => {
