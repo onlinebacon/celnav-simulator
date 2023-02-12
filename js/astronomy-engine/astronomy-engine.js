@@ -1,6 +1,8 @@
-import { interpolateCoords } from '../support/coord-math.js';
 import Stars from '../db/stars.js';
-import Sun from '../db/sun.js';
+import SunData from '../db/sun.js';
+import Interpolator from './interpolator.js';
+
+const sunInterpolator = new Interpolator(SunData);
 
 const { PI } = Math;
 const TAU = PI*2;
@@ -12,23 +14,6 @@ const SID_DAY = 86164090.53820801;
 const BASE_TIME = 1688189036000;
 
 const fixLon = (lon) => (lon%TAU + TAU + PI)%TAU - PI;
-
-const decToLat = (dec) => dec*(PI/180);
-const raToLon = (ra) => (ra*(PI/12) + PI)%TAU - PI;
-
-const latToDec = (lat) => lat*(180/PI);
-const lonToRa = (lon) => ((lon + TAU)%TAU)*(12/PI);
-
-const raDecToCoord = ({ ra, dec }) => [
-	decToLat(dec),
-	raToLon(ra),
-];
-
-const coordToRaDec = ([ lat, lon ]) => {
-	const ra = lonToRa(lon);
-	const dec = latToDec(lat);
-	return { ra, dec };
-};
 
 export const pause = () => {
 	pausedSince = Date.now();
@@ -57,7 +42,7 @@ export const getCurrentAriesGHA = () => {
 export const getGP = ({ ra, dec }) => {
 	const ariesGHA = getCurrentAriesGHA();
 	const lon = fixLon(ra/12*PI - ariesGHA);
-	const lat = decToLat(dec);
+	const lat = dec/180*PI;
 	return [ lat, lon ];
 };
 
@@ -71,26 +56,7 @@ export const setTime = (time) => {
 
 export const getSunRaDec = () => {
 	const unixTime = now()/1000;
-	let i = 0;
-	let j = Sun.length;
-	while (j - i > 1) {
-		const m = (i + j) >> 1;
-		const { t } = Sun[m];
-		if (unixTime < t) {
-			j = m;
-		} else {
-			i = m;
-		}
-	}
-	const a = Sun[i];
-	const b = Sun[j];
-	const t0 = a.t;
-	if (unixTime < t0 || b == null) {
-		return null;
-	}
-	const t1 = b.t;
-	const val = (unixTime - t0)/(t1 - t0);
-	return coordToRaDec(interpolateCoords(raDecToCoord(a), raDecToCoord(b), val));
+	return sunInterpolator.raDecAt(unixTime);
 };
 
 export const getSunGP = () => {

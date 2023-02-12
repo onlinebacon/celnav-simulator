@@ -51,23 +51,28 @@ const getSunPosAt = async (date) => {
     return data;
 };
 
-const makeRequest = async (t0, t1, i, n) => {
-    const b = i/n;
-    const a = 1 - b;
-    const t = new Date(t0*a + t1*b);
-    const { ra, dec } = await getSunPosAt(t);
-    return { t: t.getTime()/1000, ra, dec };
-};
-
 const main = async () => {
-    const t0 = new Date('2023-01-01T00:00:00Z');
-    const t1 = new Date('2024-01-01T00:00:00Z');
-    const n = 100;
-    const requests = [...new Array(n + 1)].map(async (_, i) => {
-        return makeRequest(t0, t1, i, n);
+    const startTime = new Date('2023-01-01T00:00:00Z')/1000;
+    const maxTime = new Date('2024-01-01T00:00:00Z')/1000;
+    const interval = 24*60*60;
+    const timestamps = [];
+    for (let time=startTime;;time+=interval) {
+        timestamps.push(time);
+        if (time >= maxTime) break;
+    }
+    const requests = timestamps.map((timestamp) => {
+        const time = new Date(timestamp*1000);
+        return getSunPosAt(time);
     });
-    const values = await Promise.all(requests);
-    const json = `export default ${JSON.stringify(values, null, '\t')};`;
+    const responses = await Promise.all(requests);
+    const raList = [];
+    const decList = [];
+    responses.forEach((res) => {
+        raList.push(res.ra);
+        decList.push(res.dec);
+    });
+    const data = { startTime, interval, raList, decList };
+    const json = `export default ${JSON.stringify(data, null, '\t')};`;
     fs.writeFileSync('../js/db/sun.js', json);
 };
 
