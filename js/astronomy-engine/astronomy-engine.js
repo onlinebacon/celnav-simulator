@@ -36,6 +36,10 @@ export const now = () => {
 	return new Date(Date.now() + TIME_OFFSET);
 };
 
+export const getUnixTime = () => {
+	return now()/1000;
+};
+
 export const getCurrentAriesGHA = () => {
 	const timeOffset = now() - BASE_TIME;
 	const angleOffset = timeOffset/SID_DAY*TAU;
@@ -55,7 +59,7 @@ export const getStars = (size) => {
 	return starInterpolators.slice(0, size).map(item => {
 		const { interpolator, star } = item;
 		const { mag: vmag, bv } = star;
-		const { ra, dec } = interpolator.raDecAt(now()/1000);
+		const { ra, dec } = interpolator.raDecAt(getUnixTime());
 		return { vmag, bv, ra, dec };
 	});
 };
@@ -65,8 +69,7 @@ export const setTime = (time) => {
 };
 
 export const getSunRaDec = () => {
-	const unixTime = now()/1000;
-	return sunInterpolator.raDecAt(unixTime);
+	return sunInterpolator.raDecAt(getUnixTime());
 };
 
 export const getSunGP = () => {
