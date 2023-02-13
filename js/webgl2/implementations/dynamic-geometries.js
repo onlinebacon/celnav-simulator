@@ -33,7 +33,7 @@ const normalizeMag = (mag) => Math.pow(Math.pow(2.512, MIN_MAG - mag), 0.25);
 const calcOpacity = (normalMag, radScalar) => {
 	const normalMagArea = Math.PI*normalMag*normalMag;
 	const scaledRadArea = Math.PI*radScalar*radScalar;
-	const opacity = normalMagArea/scaledRadArea;
+	const opacity = Math.min(1, normalMagArea/scaledRadArea*1.5);
 	return opacity;
 };
 
