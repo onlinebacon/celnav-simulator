@@ -11,8 +11,8 @@ const randomAzm = () => {
 
 const twilightDist = toRad(90 - 8);
 
-const minDate = new Date('2023-01-01 00:00:00 UTC');
-const maxDate = new Date('2023-12-30 00:00:00 UTC');
+const minDate = new Date('2023-01-01T00:00:00Z');
+const maxDate = new Date('2023-12-30T00:00:00Z');
 const timeRange = maxDate - minDate;
 
 export const randomizeSetup = async (player) => {
