@@ -40,7 +40,7 @@ const calcOpacity = (normalMag, radScalar) => {
 export const celestialSphere = (stars) => {
 	const attr = [];
 	const element = [];
-	const nVertices = 5;
+	const nVertices = 6;
 	const angleStep = Math.PI*2/nVertices;
 	let nStars = 0;
 	const decToXRot = (dec) => dec/180*Math.PI;
@@ -51,9 +51,10 @@ export const celestialSphere = (stars) => {
 		const mat4 = new Mat4().rotateX(decToXRot(dec)).rotateZ(raToZRot(ra));
 		const pivot = new Vec3([ 0, 1, 0 ]).apply(mat4);
 		const normalMag = normalizeMag(vmag);
-		const radScalar = Math.pow(normalMag, 0.7);
+		const radScalar = Math.pow(normalMag, 0.75);
 		const opacity = calcOpacity(normalMag, radScalar);
 		const rad = planarRad*radScalar;
+		attr.push(...pivot, ...pivot, ...color, opacity);
 		for (let i=0; i<nVertices; ++i) {
 			const angle = i*angleStep;
 			const sin = Math.sin(angle)*rad;
@@ -62,13 +63,15 @@ export const celestialSphere = (stars) => {
 			const y = 1;
 			const z = cos;
 			const edge = new Vec3([ x, y, z ]).normalize().apply(mat4);
-			attr.push(...edge, ...pivot, ...color, opacity);
+			attr.push(...edge, ...pivot, ...color, 0);
 		}
-		const b = (nStars++)*nVertices;
-		for (let i=2; i<nVertices; ++i) {
-			element.push(b, b + i - 1, b + i);
+		const b = (nStars++)*(nVertices + 1);
+		for (let i=0; i<nVertices; ++i) {
+			let a = b + 1 + i;
+			let c = b + 1 + (i + 1)%nVertices;
+			element.push(b, a, c);
 		}
 	};
 	stars.forEach(addStar);
-	return new Geometry({ attr, element, layout: [ 3, 3, 3, 1 ] });
+	return new Geometry({ attr, element, layout: [ 3, 3, 4 ] });
 };
