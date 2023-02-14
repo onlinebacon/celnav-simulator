@@ -27,7 +27,7 @@ excepted += '32349,-1.44,6.7695722222222222,-16.747944444444446\n'
 
 def extract(y, m, d, h):
 	t = ts.utc(y, m, d, h, 0, 0)
-	ra_list, dec_list, _ = earth.at(t).observe(bright_stars).radec()
+	ra_list, dec_list, _ = earth.at(t).observe(bright_stars).radec(epoch='date')
 	ra_list = ra_list.hours
 	dec_list = dec_list.degrees
 	text = 'hip,mag,ra,dec\n'
