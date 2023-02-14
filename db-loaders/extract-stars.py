@@ -36,7 +36,7 @@ earth = planets['earth']
 
 def extract(year, month, day, hour, min, sec):
 	t = ts.utc(year, month, day, hour, min, sec)
-	ra_list, dec_list, _ = earth.at(t).observe(bright_stars).radec()
+	ra_list, dec_list, _ = earth.at(t).observe(bright_stars).radec(epoch='date')
 	ra_list = ra_list.hours
 	dec_list = dec_list.degrees
 	for i in range(len(hips)):
