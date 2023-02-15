@@ -40,7 +40,7 @@ const calcOpacity = (normalMag, radScalar) => {
 export const celestialSphere = (stars) => {
 	const attr = [];
 	const element = [];
-	const nVertices = 6;
+	const nVertices = 10;
 	const angleStep = Math.PI*2/nVertices;
 	let nStars = 0;
 	const decToXRot = (dec) => dec/180*Math.PI;
@@ -63,7 +63,7 @@ export const celestialSphere = (stars) => {
 			const y = 1;
 			const z = cos;
 			const edge = new Vec3([ x, y, z ]).normalize().apply(mat4);
-			attr.push(...edge, ...pivot, ...color, 0);
+			attr.push(...edge, ...pivot, ...color, 0.2);
 		}
 		const b = (nStars++)*(nVertices + 1);
 		for (let i=0; i<nVertices; ++i) {

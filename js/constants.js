@@ -3,7 +3,7 @@ export default {
     ATMOSPHERE_RAD: 0.9,
     HORIZON_RAD:    0.8,
     STAR_ANGULAR_SIZE: 0.15/180*Math.PI,
-    STAR_VERT_REL_SIZE: 0.007,
+    STAR_VERT_REL_SIZE: 0.0072,
     BG_COLOR: [ 0.05, 0.06, 0.10 ],
     WATER_COLOR: [ 0.053, 0.072, 0.11 ],
     MAX_DIP: 2/180*Math.PI,
