@@ -9,7 +9,7 @@ This is a webgl2 based celestial navigation simulator. It simulates an observer 
 This web page is currently in progess. So far this is what is available: 
 - A horizon with dip applied to it
 - 1600+ of the brightest stars
-- Mouse controls to move your view up and down and left and right
+- Mouse controls to move your view up, down, left and right
 - A sextant view that splits the screen in two sights
 - Mouse + keyboard control to play with the sextant angle
 - The position of stars being affected by standard atmospheric refracion
