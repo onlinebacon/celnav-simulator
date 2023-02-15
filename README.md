@@ -18,11 +18,11 @@ This web page is currently in progess. So far this is what is available:
 - Colored celestial bodies
 - An interface for the user to check his coordinates
 - Stars positions up-to-date
+- Coordinates and starting time in the URL parameter
 
 ## Next steps
 
 - Add planets
-- Links with preloaded coordinates
 - Improve stars/planets catalogue accuracy
 - Prevent sextant from picking negative angles
 - Add dynamic colors to the sky to match the twilight
@@ -31,3 +31,5 @@ This web page is currently in progess. So far this is what is available:
 - Improve controls
 - Add some obscuration to the sky above the horizon
 - Use "global uniforms" for webgl2 simplicity
+- Radial gradiant around sextant scope
+- Button to get link with coordinates instead of being always in the URL
