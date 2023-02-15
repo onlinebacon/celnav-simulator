@@ -1,3 +1,4 @@
+const compress = require('./compress.js');
 const fs = require('fs');
 const path = require('path');
 let starList = require('./stars-skyfield-data.json');
@@ -21,6 +22,6 @@ starList = starList.filter(star => star.raList && star.decList);
 starList = starList.filter(star => bvMap[star.hip] != null);
 starList = starList.map(star => ({ ...star, bv: bvMap[star.hip] }));
 starList.sort((a, b) => a.mag - b.mag);
-const json = JSON.stringify(starList, null, '\t');
+const json = JSON.stringify(compress(starList));
 const outputSrc = `export default ${json};`;
 fs.writeFileSync(path.join(__dirname, '../js/db/stars.js'), outputSrc);

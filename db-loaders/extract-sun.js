@@ -1,5 +1,6 @@
 const http = require('http');
 const fs = require('fs');
+const compress = require('./compress.js');
 
 const APIURL = 'http://skilltrek.com:8080';
 
@@ -72,7 +73,7 @@ const main = async () => {
         decList.push(res.dec);
     });
     const data = { startTime, interval, raList, decList };
-    const json = `export default ${JSON.stringify(data, null, '\t')};`;
+    const json = `export default ${JSON.stringify(compress(data))};`;
     fs.writeFileSync('../js/db/sun.js', json);
 };
 
