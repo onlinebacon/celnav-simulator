@@ -5,6 +5,7 @@ import * as AstronomyEngine from './astronomy-engine/astronomy-engine.js';
 import * as Control from './control.js';
 import * as Scene from './scene.js';
 import * as Randomizer from './randomizer/randomizer.js';
+import * as LeftBoxes from './left-boxes.js';
 import { encodeTimeLoc, decodeTimeLoc } from './support/time-loc-encoder.js';
 
 import calcDip from './support/calc-dip.js';
@@ -72,6 +73,23 @@ if (encoded) {
 	});
 }
 
+let mouseOnTheLeft = false;
+let leftMaxX = 350;
+let leftMinX = 50;
+
 window.addEventListener('resize', handleResize);
+window.addEventListener('mousemove', e => {
+	if (mouseOnTheLeft) {
+		if (e.clientX >= leftMaxX) {
+			mouseOnTheLeft = false;
+			LeftBoxes.hide();
+		}
+	} else {
+		if (e.clientX < leftMinX) {
+			mouseOnTheLeft = true;
+			LeftBoxes.show();
+		}
+	}
+});
 
 handleResize();
