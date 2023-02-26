@@ -22,6 +22,7 @@ This web page is currently in progess. So far this is what is available:
 
 ## Next steps
 
+- Add milky way background
 - Add planets
 - Improve stars/planets catalogue accuracy
 - Prevent sextant from picking negative angles
