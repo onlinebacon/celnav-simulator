@@ -8,7 +8,7 @@ const buildSextantScope = () => {
 	const z = -1;
 	const color = [ 0, 0, 0 ];
 	const attr = [];
-	const size_x = 2;
+	const size_x = 5;
 	const size_y = 1;
 	for (let i=0; i<=n; ++i) {
 		const angle = i/n*Math.PI;
