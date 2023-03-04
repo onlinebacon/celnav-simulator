@@ -53,3 +53,16 @@ export const atmosphereR = new Program({
 	vertexShader: VertexShaders.atmosphereR,
 	fragShader:   FragShaders.coloredGeometry,
 });
+
+export const texturedGeometry = new Program({
+	vertexShader: VertexShaders.texturedGeometry,
+	fragShader:   FragShaders.textured,
+});
+export const texturedGeometryL = new Program({
+	vertexShader: VertexShaders.texturedGeometryL,
+	fragShader:   FragShaders.textured,
+});
+export const texturedGeometryR = new Program({
+	vertexShader: VertexShaders.texturedGeometryR,
+	fragShader:   FragShaders.textured,
+});

@@ -1,7 +1,8 @@
 export default {
-    CEL_SPHERE_RAD: 1.0,
-    ATMOSPHERE_RAD: 0.9,
-    HORIZON_RAD:    0.8,
+    MILKY_WAY_RAD:  1.00,
+    CEL_SPHERE_RAD: 0.98,
+    ATMOSPHERE_RAD: 0.96,
+    HORIZON_RAD:    0.94,
     STAR_ANGULAR_SIZE: 0.15/180*Math.PI,
     STAR_VERT_REL_SIZE: 0.0072,
     BG_COLOR: [ 0.05, 0.06, 0.10 ],
