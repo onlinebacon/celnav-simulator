@@ -35,6 +35,8 @@ export const textured = new FragShader(`
 	out vec4 FragColor;
 
 	void main() {
-		FragColor = texture(u_texture, uv);
+		vec4 color = texture(u_texture, uv);
+		color[3] = 0.1;
+		FragColor = color;
 	}
 `);

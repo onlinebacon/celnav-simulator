@@ -39,6 +39,7 @@ const updateCamera = (alt) => {
 		lon: player.lon,
 		ariesGHA: AstronomyEngine.getCurrentAriesGHA(),
 	});
+    MilkyWay.setTransform(CelestialSphere.transform);
 };
 
 Webgl2.setFrame(function(ctx) {

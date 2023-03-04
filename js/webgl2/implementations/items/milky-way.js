@@ -18,3 +18,7 @@ export const draw = (ctx, camera, side = 'C') => {
     prog.setMat4Uniform('projection', camera.projection);
     ctx.drawGeometry(geometry);
 };
+
+export const setTransform = (mat4) => {
+    transform.set(mat4);
+};

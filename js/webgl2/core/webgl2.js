@@ -34,6 +34,24 @@ export class FragShader extends Shader {
 	}
 }
 
+export class Texture {
+	constructor({ img }) {
+		const ptr = gl.createTexture();
+		gl.activeTexture(gl.TEXTURE0);
+		gl.bindTexture(gl.TEXTURE_2D, ptr);
+		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+		gl.generateMipmap(gl.TEXTURE_2D);
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_BASE_LEVEL, 0);
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAX_LOD, 2);
+	}
+	activate() {
+		return 0;
+	}
+}
+
 export class Program {
 	constructor({ vertexShader, fragShader }) {
 		this.id = Symbol();
@@ -45,6 +63,10 @@ export class Program {
 		gl.linkProgram(ptr);
 		this.ptr = ptr;
 		this.uniformMap = {};
+	}
+	setTextureUniform(name, texture) {
+		const index = texture.activate();
+		gl.uniform1i(this.getLocation(name), index);
 	}
 	setFloatUniform(name, value) {
 		gl.uniform1f(this.getLocation(name), value);

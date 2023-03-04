@@ -91,10 +91,10 @@ const buildMilkyWay = () => {
 	const nSegments = 64;
 	for (let i=0; i<=nRings; ++i) {
 		const uvy = i/nRings;
-		const dec = (0.5 - uvy)*Math.PI;
+		const dec = (uvy - 0.5)*Math.PI;
 		for (let j=0; j<=nSegments; ++j) {
 			const uvx = j/nSegments;
-			const ra = uvx*Math.PI*2;
+			const ra = Math.PI - uvx*Math.PI*2;
 			const cos_dec = Math.cos(dec);
 			const x = Math.sin(ra)*cos_dec*radius;
 			const y = Math.cos(ra)*cos_dec*radius;
