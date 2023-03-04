@@ -83,5 +83,41 @@ const buildAtmosphere = () => {
 	return new Geometry({ attr, element, layout: [ 3, 1, 1 ] });
 };
 
+const buildMilkyWay = () => {
+	const radius = Constants.MILKY_WAY_RAD;
+	const attr = [];
+	const element = [];
+	const nRings = 32;
+	const nSegments = 64;
+	for (let i=0; i<=nRings; ++i) {
+		const uvy = i/nRings;
+		const dec = (uvy - 0.5)*Math.PI;
+		for (let j=0; j<=nSegments; ++j) {
+			const uvx = j/nSegments;
+			const ra = Math.PI - uvx*Math.PI*2;
+			const cos_dec = Math.cos(dec);
+			const x = Math.sin(ra)*cos_dec*radius;
+			const y = Math.cos(ra)*cos_dec*radius;
+			const z = Math.sin(dec)*radius;
+			attr.push(x, y, z, uvx, uvy);
+		}
+	}
+	for (let i=0; i<nRings; ++i) {
+		const row0 = (i + 0)*(nSegments + 1);
+		const row1 = (i + 1)*(nSegments + 1);
+		for (let j=0; j<nSegments; ++j) {
+			const a = row0 + j + 0;
+			const b = row0 + j + 1;
+			const c = row1 + j + 0;
+			const d = row1 + j + 1;
+			element.push(a, b, c);
+			element.push(b, c, d);
+		}
+	}
+	const layout = [ 3, 2 ];
+	return new Geometry({ attr, element, layout });
+};
+
 export const sextantScope = buildSextantScope();
 export const atmosphere = buildAtmosphere();
+export const milkyWay = buildMilkyWay();

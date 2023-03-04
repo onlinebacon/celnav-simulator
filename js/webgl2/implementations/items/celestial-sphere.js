@@ -10,7 +10,8 @@ const progMap = {
 };
 
 let geometry = null;
-const transform = new Mat4();
+
+export const transform = new Mat4();
 
 export const build = (stars) => {
     geometry = DynamicGeometries.celestialSphere(stars);

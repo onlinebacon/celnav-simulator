@@ -3,6 +3,7 @@ import * as CelestialSphere from './webgl2/implementations/items/celestial-spher
 import * as Horizon from './webgl2/implementations/items/horizon.js';
 import * as SextantScope from './webgl2/implementations/items/sextant-scope.js';
 import * as Atmosphere from './webgl2/implementations/items/atmosphere.js';
+import * as MilkyWay from './webgl2/implementations/items/milky-way.js';
 import * as AstronomyEngine from './astronomy-engine/astronomy-engine.js';
 import * as ScreenInfo from './screen-info/screen-info.js';
 import { Camera } from './webgl2/core/camera.js';
@@ -18,6 +19,7 @@ export const setCamera = (c) => camera = c;
 export const setPlayer = (p) => player = p;
 
 const drawFixedItems = (ctx, camera, side) => {
+    MilkyWay.draw(ctx, camera, side);
     CelestialSphere.draw(ctx, camera, side);
     Atmosphere.draw(ctx, camera, side);
 	Horizon.draw(ctx, camera, side);
@@ -37,6 +39,7 @@ const updateCamera = (alt) => {
 		lon: player.lon,
 		ariesGHA: AstronomyEngine.getCurrentAriesGHA(),
 	});
+    MilkyWay.setTransform(CelestialSphere.transform);
 };
 
 Webgl2.setFrame(function(ctx) {

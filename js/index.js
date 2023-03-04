@@ -5,6 +5,7 @@ import * as AstronomyEngine from './astronomy-engine/astronomy-engine.js';
 import * as Control from './control.js';
 import * as Scene from './scene.js';
 import * as Randomizer from './randomizer/randomizer.js';
+import * as Textures from './webgl2/implementations/textures.js';
 import { encodeTimeLoc, decodeTimeLoc } from './support/time-loc-encoder.js';
 
 import calcDip from './support/calc-dip.js';
@@ -34,12 +35,6 @@ const handleResize = () => {
 	Webgl2.resize(width, height);
 };
 
-const init = () => {
-	document.body.appendChild(Webgl2.canvas);
-	CelestialSphere.build(AstronomyEngine.getStars(1600));
-	Webgl2.start();
-};
-
 const putEncodedStateInURL = () => {
 	const { lat, lon } = player;
 	const loc = [ lat, lon ];
@@ -57,21 +52,34 @@ const getEncodedStateFromURL = () => {
 	return params.init ?? null;
 };
 
-const encoded = getEncodedStateFromURL();
-if (encoded) {
-	const [ timestamp, [ lat, lon ] ] = decodeTimeLoc(encoded);
-	const date = new Date(timestamp*1000);
-	AstronomyEngine.setTime(date);
-	player.lat = lat;
-	player.lon = lon;
-	init();
-} else {
-	Randomizer.randomizeSetup(player).then(() => {
-		init();
+export const setupObserver = async () => {
+	const encoded = getEncodedStateFromURL();
+	if (encoded) {
+		const [ timestamp, [ lat, lon ] ] = decodeTimeLoc(encoded);
+		const date = new Date(timestamp*1000);
+		AstronomyEngine.setTime(date);
+		player.lat = lat;
+		player.lon = lon;
+	} else {
+		await Randomizer.randomizeSetup(player);
 		putEncodedStateInURL();
-	});
-}
+	}
+};
+
+const init = async () => {
+	await Promise.all([
+		setupObserver(),
+		Textures.load(),
+	]);
+	document.body.appendChild(Webgl2.canvas);
+	CelestialSphere.build(AstronomyEngine.getStars(1600));
+	Webgl2.start();
+};
 
 window.addEventListener('resize', handleResize);
 
 handleResize();
+
+init().catch(err => {
+	alert('Oops! Something wen\'t wrong. Please try refreshing the page');
+});

@@ -19,10 +19,10 @@ This web page is currently in progess. So far this is what is available:
 - An interface for the user to check his coordinates
 - Stars positions up-to-date
 - Coordinates and starting time in the URL parameter
+- Milky way in the background
 
 ## Next steps
 
-- Add milky way background
 - Add planets
 - Improve stars/planets catalogue accuracy
 - Prevent sextant from picking negative angles

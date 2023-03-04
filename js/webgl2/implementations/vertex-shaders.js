@@ -124,6 +124,25 @@ const atmosphereSrc = `
 	}
 `;
 
+const texturedGeometrySrc = `
+	#version 300 es
+	precision highp float;
+
+	layout (location = 0) in vec3 inVertex;
+	layout (location = 1) in vec2 inUv;
+
+	uniform mat4 transform;
+	uniform mat4 projection;
+
+	out vec2 uv;
+
+	void main() {
+		gl_Position = vec4(inVertex, 1.0)*transform*projection;
+		uv = inUv;
+		/* MAIN_END */
+	}
+`;
+
 const sideVersion = (src, addX) => {
 	src = src.replace(/\/\*\s*MAIN_END\s*\*\//, sideProjection(addX));
 	return new VertexShader(src);
@@ -147,3 +166,7 @@ export const orthographicR = sideR(orthographicSrc);
 export const atmosphere = new VertexShader(atmosphereSrc);
 export const atmosphereL = sideL(atmosphereSrc);
 export const atmosphereR = sideR(atmosphereSrc);
+
+export const texturedGeometry = new VertexShader(texturedGeometrySrc);
+export const texturedGeometryL = sideL(texturedGeometrySrc);
+export const texturedGeometryR = sideR(texturedGeometrySrc);
