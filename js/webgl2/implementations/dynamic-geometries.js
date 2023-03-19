@@ -45,6 +45,7 @@ export const celestialSphere = (stars) => {
 	let nStars = 0;
 	const decToXRot = (dec) => dec/180*Math.PI;
 	const raToZRot = (ra) => - ra/12*Math.PI;
+	const contrastVMagCut = stars.slice(0, 59).at(-1).vmag;
 	const addStar = ({ ra, dec, vmag, bv }) => {
 		const color = bvToRgb(bv);
 		const planarRad = Math.tan(Constants.STAR_ANGULAR_SIZE/2);
@@ -52,8 +53,9 @@ export const celestialSphere = (stars) => {
 		const pivot = new Vec3([ 0, 1, 0 ]).apply(mat4);
 		const normalMag = normalizeMag(vmag);
 		const radScalar = Math.pow(normalMag, 0.75);
-		const opacity = calcOpacity(normalMag, radScalar);
-		const rad = planarRad*radScalar;
+		const contrastScale = vmag > contrastVMagCut ? 0.9 : 1.1;
+		const opacity = calcOpacity(normalMag, radScalar)*contrastScale;
+		const rad = planarRad*radScalar*contrastScale;
 		attr.push(...pivot, ...pivot, ...color, opacity);
 		for (let i=0; i<nVertices; ++i) {
 			const angle = i*angleStep;
